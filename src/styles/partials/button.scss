@@ -1,0 +1,28 @@
+.button {
+  background-color: $darkAccentColor;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  height: 40px;
+  border: 1px solid transparent;
+  color: $white;
+  transition: color $trans, background-color $trans, border-color $trans, opacity $trans;
+
+  &:hover {
+    color: $darkAccentColor;
+    border-color: $darkAccentColor;
+    background-color: transparent;
+  }
+
+  &:active {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    color: $darkAccentColor;
+    border-color: $darkAccentColor;
+    background-color: transparent;
+  }
+}

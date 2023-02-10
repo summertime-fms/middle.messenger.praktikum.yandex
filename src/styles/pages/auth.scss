@@ -1,0 +1,27 @@
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+
+  width: 75%;
+
+}
+
+.auth__sign-up {
+  align-self: flex-end;
+  color: $accentColor;
+  font-size: 11px;
+  line-height: 13px;
+  text-decoration-line: underline;
+  margin-top: -10px;
+  transition: color $trans;
+
+  &:hover {
+    color: $gray;
+  }
+}
+
+.auth__button {
+  width: 100%;
+}
