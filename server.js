@@ -7,5 +7,5 @@ const PORT = 3000;
 app.use(express.static('./dist/'));
 
 app.listen(PORT, function () {
-    console.log(`Server is launched`);
+    console.log(`Server is launched!`);
 });
