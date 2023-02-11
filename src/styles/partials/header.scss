@@ -1,9 +1,8 @@
 .header {
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
+    height: var(--headerHeight);
+    display: grid;
+    place-items: center;
 }
 
-.header__wrapper {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}

@@ -1,11 +1,13 @@
 {
   "scripts": {
+    "start": "node ./server.js",
     "dev": "parcel ./src/html/pages/*.hbs --no-cache",
     "watch": "parcel"
   },
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/transformer-sass": "^2.8.3",
+    "express": "^4.18.2",
     "parcel": "^2.8.3"
   },
   "dependencies": {
