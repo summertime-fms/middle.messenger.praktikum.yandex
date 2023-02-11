@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "npm run build && node server.js",
+    "start": "node server.js",
     "dev": "parcel ./src/html/pages/*.hbs --no-cache",
     "build": "parcel build ./src/html/pages/index.hbs --no-cache",
     "watch": "parcel"
