@@ -1,0 +1,13 @@
+.auth__sign-up {
+  align-self: flex-end;
+  color: $accentColor;
+  font-size: 11px;
+  line-height: 13px;
+  text-decoration-line: underline;
+  margin-top: -10px;
+  transition: color $trans;
+
+  &:hover {
+    color: $gray;
+  }
+}
