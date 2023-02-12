@@ -20,7 +20,7 @@
     border-bottom: 2px solid $accentColor;
   }
 
-  > span {
+  >span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -33,11 +33,11 @@
     transition: transform $trans;
   }
 
-  &.active > span {
+  &.active>span {
     transform: scale(0.75) translate(-8px, -35px);
   }
 
-  input:focus + span {
+  input:focus+span {
     transform: scale(0.75) translate(-8px, -35px);
   }
 }

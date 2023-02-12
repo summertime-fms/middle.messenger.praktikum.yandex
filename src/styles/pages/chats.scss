@@ -13,7 +13,7 @@
   border-radius: 10px;
   background-color: $white;
   overflow: hidden;
-  height: calc(100vh  - var(--headerHeight) - (var(--main-padding) * 2));
+  height: calc(100vh - var(--headerHeight) - (var(--main-padding) * 2));
 }
 
 .chats__header {
