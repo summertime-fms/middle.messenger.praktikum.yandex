@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../2313423-sedona-36/.idea/2313423-sedona-36.iml" filepath="$PROJECT_DIR$/../2313423-sedona-36/.idea/2313423-sedona-36.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/middle.messenger.praktikum.yandex.iml" filepath="$PROJECT_DIR$/.idea/middle.messenger.praktikum.yandex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../vegas/ya.snippets/.idea/ya.snippets.iml" filepath="$PROJECT_DIR$/../vegas/ya.snippets/.idea/ya.snippets.iml" />
     </modules>
   </component>
 </project>
