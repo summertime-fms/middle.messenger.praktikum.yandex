@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "start": "npm run build",
+    "start": "npm run build && node server.js",
     "dev": "parcel ./src/index.html --no-cache --open",
-    "build": "npx -p parcel parcel build ./src/html/pages/index.hbs --no-cache",
+    "build": "npm -p parcel parcel build ./src/html/pages/index.hbs --no-cache",
     "watch": "parcel",
     "test": "stylelint \"src/styles/**/*.scss\" && eslint \"src/js/**/*.ts\" --fix"
   },
