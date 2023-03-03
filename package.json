@@ -2,7 +2,7 @@
   "scripts": {
     "start": "npm run build && node server.js",
     "dev": "parcel ./src/index.html --no-cache --open",
-    "build": "parcel parcel build ./src/html/pages/index.hbs --no-cache",
+    "build": "parcel ./src/index.html --no-cache",
     "watch": "parcel",
     "test": "stylelint \"src/styles/**/*.scss\" && eslint \"src/js/**/*.ts\" --fix"
   },
