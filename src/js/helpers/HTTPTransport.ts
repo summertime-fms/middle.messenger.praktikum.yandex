@@ -9,7 +9,7 @@ export enum FETCH_METHODS {
 }
 
 /* eslint-enable */
-
+type HTTPMethod = (url: string, options?: Options) => Promise<unknown>
 
 const queryStringify = (data: object): string => {
   if (typeof data !== 'object') {
@@ -20,7 +20,6 @@ const queryStringify = (data: object): string => {
 }
 
 type Options = {
-  url: string,
   data?: any,
   timeout?: number,
   method?: string,
@@ -28,7 +27,13 @@ type Options = {
 }
 
 class HTTPTransport {
-  get = (url: string, options: Options) => {
+  get: HTTPMethod = (url, options = {}) => {
+    const {data} = options;
+
+    if (data) {
+      url = url + queryStringify(data);
+    }
+
     return this.request(url, {...options, method: FETCH_METHODS.GET}, options.timeout);
   };
 
@@ -44,24 +49,14 @@ class HTTPTransport {
     return this.request(url, {...options, method: FETCH_METHODS.DELETE}, options.timeout);
   };
 
-
   request = (url: string, options: Options, timeout = 5000) => {
     let {method, data, headers = {}} = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const isGet = method === FETCH_METHODS.GET;
-
-      if (method === FETCH_METHODS.GET && data) {
-        url = url + data;
-      }
 
       xhr.open(
-        method!,
-        isGet && !!data
-          ? `${url}${queryStringify(data)}`
-          : url,
-      );
+        method!, url);
 
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);

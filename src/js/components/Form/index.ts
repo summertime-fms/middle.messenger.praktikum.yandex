@@ -3,6 +3,7 @@ import Button from '../Button';
 import Block from '../../helpers/Block';
 import template from './template.hbs';
 import { validate } from '../../helpers/validation';
+import Input from "../Input";
 
 interface FormProps {
   labels: Array<Label>;
@@ -16,16 +17,16 @@ export default class Form extends Block {
     const internalSubmit = (evt: any) => {
       evt.preventDefault();
       const result: Record<string, any> = {};
-      const form: any = this.element;
-      const inputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input');
-
-      inputs.forEach((input) => {
-        result[input.name] = input.value;
-      });
 
       this.children.labels.forEach((label: Label): void => {
-        validate(label.children.input.element, label);
+        const input: Input = label.children.input;
+
+        result[input.element.name] = input.element.value;
+        validate(input, label);
       });
+
+      console.log(result)
+
       if (externalSubmit) {
         externalSubmit();
       }

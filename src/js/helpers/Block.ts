@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 import EventBus from './EventBus';
 
-export default class Block {
-  static readonly EVENTS: Record<string, string> = {
+export default abstract class Block<Props extends Record<string, any> = unknown> {
+  static readonly EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
-  };
+  } as const;
 
   public id: string;
 
@@ -15,7 +15,7 @@ export default class Block {
 
   private _element: any = null;
 
-  protected props: any;
+  protected props: Props;
 
   private events: Record<string, () => void>;
 
@@ -177,7 +177,7 @@ export default class Block {
     return temp.content;
   }
 
-  _makePropsProxy(props: Object): Object {
+  _makePropsProxy(props: Props): Props {
     props = new Proxy(props, {
       get(target, prop: string) {
         const value = target[prop as keyof Object];
@@ -202,6 +202,14 @@ export default class Block {
       },
     });
     return props;
+  }
+
+  _removeEvents() {
+    const {events = {}} = this.props;
+
+    Object.keys(events).forEach(eventName => {
+      this._element.removeEventListener(eventName, events[eventName]);
+    });
   }
 
   _compile() {
