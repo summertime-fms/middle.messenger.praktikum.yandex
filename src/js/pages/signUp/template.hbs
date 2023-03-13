@@ -1,0 +1,30 @@
+<div class="modal wrapper">
+  <ul class="nav wrapper" style="justify-content: center; margin-bottom: 25px;display: flex; gap: 25px">
+    <li>
+      <a href="#" data-page="signUp">Sign Up</a>
+    </li>
+    <li>
+      <a href="#" data-page="signIn">Sign In</a>
+    </li>
+    <li>
+      <a href="#" data-page="chat">Chat</a>
+    </li>
+    <li>
+      <a href="#" data-page="error">Error</a>
+    </li>
+  </ul>
+
+  <div class="modal__inner">
+    <h2 class="title title--h2">
+      {{title}}
+    </h2>
+
+    {{{signUpForm}}}
+
+      <a href="../../../html/pages/sign-up.hbs" class="auth__sign-up">
+        Already have an account?
+      </a>
+    </form>
+  </div>
+</div>
+

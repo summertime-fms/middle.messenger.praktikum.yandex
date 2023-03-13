@@ -1,7 +1,5 @@
 :root {
     --main-padding: 25px;
-    --headerHeight: 70px;
-    --footerHeiht: 70px;
 }
 
 * {
@@ -23,7 +21,6 @@ ul li {
 
 html {
     height: 100%;
-    -webkit-text-size-adjust: none;
     font: normal 400 16px/1.2 $mainFont;
     scroll-behavior: smooth;
 }
@@ -37,17 +34,14 @@ body {
     position: relative;
     width: 100%;
     min-height: 100%;
-
     display: flex;
     flex-direction: column;
-
     color: $black;
     letter-spacing: -0.01em;
     overflow-x: hidden;
     scroll-behavior: smooth;
     font-family: $mainFont;
     background-color: $bgColor;
-
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -96,4 +90,8 @@ button {
     clip-path: inset(100%);
     clip: rect(0 0 0 0);
     overflow: hidden;
+}
+
+#app {
+  height: 100vh;
 }

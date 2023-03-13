@@ -1,0 +1,25 @@
+<ul class="chats__list">
+    {{#each chats}}
+      <li>
+        <div class="chats__item">
+          <div class="chats__image">
+            <img src="./../../../../img/avatar.png" alt="Аватар пользователя {{this.name}}" decoding="async" loading="lazy">
+          </div>
+
+          <span class="chats__name">
+            {{this.name}}
+          </span>
+
+          <p>
+            {{this.messagePreview}}
+          </p>
+
+          <span class="chats__item-total">
+            +{{this.totalNewMessages}}
+          </span>
+
+          <time datetime="{{this.time}}">{{this.time}}</time>
+        </div>
+      </li>
+    {{/each}}
+  </ul>

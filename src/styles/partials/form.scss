@@ -1,26 +1,10 @@
 .form__label {
   --height: 30px;
 
-  position: relative;
   width: 100%;
+  display: grid;
 
-  input {
-    height: var(--height);
-    padding: 0 8px;
-    line-height: var(--height);
-    display: block;
-    width: 100%;
-
-    font-family: $secondFont;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 21px;
-
-    color: $black;
-    border-bottom: 2px solid $accentColor;
-  }
-
-  >span {
+  > div span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -28,20 +12,43 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
-
     color: $gray;
     transition: transform $trans;
   }
 
-  &.active>span {
-    transform: scale(0.75) translate(-8px, -35px);
+  > div {
+    position: relative;
+
+    &.active  span {
+      transform: scale(0.75) translate(-8px, -35px);
+    }
   }
 
-  input:focus+span {
+  input {
+    height: var(--height);
+    padding: 0 8px;
+    line-height: var(--height);
+    display: block;
+    width: 100%;
+    font-family: $secondFont;
+    font-weight: 500;
+    font-size: 14px;
+    color: $black;
+    border-bottom: 2px solid $accentColor;
+  }
+
+  input:focus + span {
     transform: scale(0.75) translate(-8px, -35px);
   }
 }
 
 .form__button {
   width: 100%;
+}
+
+.form .error {
+  display: block;
+  color: red;
+  font-size: 10px;
+  line-height: 1.2;
 }
