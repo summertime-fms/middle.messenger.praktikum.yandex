@@ -4,11 +4,8 @@ import Label from '../../components/Label';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
-
 import { validate } from '../../helpers/validation';
-
 import template from './template.hbs';
-import { renderDom } from '../../helpers/renderDOM';
 
 interface SignInPageProps {
   title: string
@@ -76,14 +73,7 @@ export default class SignInPage extends Block {
   }
 
   componentDidMount() {
-    const links: HTMLLinkElement[] = this.element.querySelectorAll('.nav a');
-    Array.from(links).forEach((link) => {
-      link.addEventListener('click', (evt: any) => {
-        evt.preventDefault();
-        const { page } = link.dataset;
-        renderDom(page!);
-      });
-    });
+
   }
 
   render() {

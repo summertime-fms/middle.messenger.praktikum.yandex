@@ -7,7 +7,6 @@ import Message from '../../components/Message';
 import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels } from '../../helpers/mocks';
 import Settings from './Blocks/Settings';
 import Form from '../../components/Form';
-import { renderDom } from '../../helpers/renderDOM';
 
 const messages: Message[] = messagesArr.map((message) => new Message(message));
 
@@ -92,14 +91,7 @@ export default class ChatPage extends Block {
   }
 
   componentDidMount() {
-    const links: HTMLLinkElement[] = this.element.querySelectorAll('.nav a');
-    Array.from(links).forEach((link) => {
-      link.addEventListener('click', (evt: any) => {
-        evt.preventDefault();
-        const { page } = link.dataset;
-        renderDom(page!);
-      });
-    });
+
   }
 
   render() {

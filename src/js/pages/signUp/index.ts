@@ -6,7 +6,6 @@ import ErrorMessage from '../../components/ErrorMessage';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import { validate } from '../../helpers/validation';
-import { renderDom } from '../../helpers/renderDOM';
 
 interface SignUpPageProps {
   title: string
@@ -151,14 +150,7 @@ export default class SignUpPage extends Block {
   }
 
   componentDidMount() {
-    const links: Array<HTMLElement> = this.element.querySelectorAll('.nav a');
-    Array.from(links).forEach((link) => {
-      link.addEventListener('click', (evt: any) => {
-        evt.preventDefault();
-        const { page } = link.dataset;
-        renderDom(page!);
-      });
-    });
+
   }
 
   render() {

@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 export enum FETCH_METHODS {
   POST = 'POST',
   GET = 'GET',
@@ -26,26 +25,33 @@ type Options = {
   headers?: Record<string, string>
 }
 
-class HTTPTransport {
+export default class HTTPTransport {
+  private url: string;
+  static BASE_API_URL = 'ya-praktikum.tech/api/v2';
+
+  constructor(endpoint: string) {
+    this.url = HTTPTransport.BASE_API_URL + endpoint;
+  };
+
   get: HTTPMethod = (url, options = {}) => {
-    const {data} = options;
+    const data = options.data;
 
     if (data) {
-      url = url + queryStringify(data);
+      this.url = this.url + queryStringify(data);
     }
 
     return this.request(url, {...options, method: FETCH_METHODS.GET}, options.timeout);
-  };
+  }
 
-  post = (url: string, options: Options) => {
+  post: HTTPMethod = (url: string, options: Options) => {
     return this.request(url, {...options, method: FETCH_METHODS.POST}, options.timeout);
   };
 
-  put = (url: string, options: Options) => {
+  put: HTTPMethod = (url: string, options: Options) => {
     return this.request(url, {...options, method: FETCH_METHODS.PUT}, options.timeout);
   };
 
-  delete = (url: string, options: Options) => {
+  delete: HTTPMethod = (url: string, options: Options) => {
     return this.request(url, {...options, method: FETCH_METHODS.DELETE}, options.timeout);
   };
 
@@ -54,6 +60,7 @@ class HTTPTransport {
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      const isGet = method === FETCH_METHODS.GET;
 
       xhr.open(
         method!, url);

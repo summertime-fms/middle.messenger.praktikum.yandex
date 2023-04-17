@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import EventBus from './EventBus';
 
-export default abstract class Block<Props extends Record<string, any> = unknown> {
+export default abstract class Block {
   static readonly EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -15,7 +15,7 @@ export default abstract class Block<Props extends Record<string, any> = unknown>
 
   private _element: any = null;
 
-  protected props: Props;
+  protected props;
 
   private events: Record<string, () => void>;
 
