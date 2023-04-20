@@ -2,41 +2,41 @@ import Label from '../Label';
 import Button from '../Button';
 import Block from '../../helpers/Block';
 import template from './template.hbs';
-import { validate } from '../../helpers/validation';
+import {validate, validateForm} from '../../helpers/validation';
 import Input from "../Input";
 
 interface FormProps {
   labels: Array<Label>;
   submitButton: Button,
-  events: Record<string, (arg?: any) => any>;
+  events: Record<string, (arg?: any) => any>,
+  isValid?: boolean | null
 }
 export default class Form extends Block {
+  private isValid: boolean | null;
+
   constructor(props: FormProps) {
     const externalSubmit = props.events?.submit;
 
     const internalSubmit = (evt: any) => {
       evt.preventDefault();
-      const result: Record<string, any> = {};
+      this.isValid = validateForm(this.children.labels);
 
-      this.children.labels.forEach((label: Label): void => {
-        const input: Input = label.children.input;
-
-        result[input.element.name] = input.element.value;
-        validate(input, label);
-      });
-
-      console.log(result)
-
-      if (externalSubmit) {
+      if (externalSubmit && this.isValid) {
         externalSubmit();
       }
     };
 
     props.events.submit = internalSubmit;
     super(props);
+
+    this.isValid = null;
   }
 
   render() {
     return this.compile(template, this.props);
+  }
+
+  getInputs() {
+    return this.children.labels.map(label => label.children.input)
   }
 }

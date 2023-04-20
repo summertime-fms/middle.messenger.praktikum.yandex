@@ -6,7 +6,8 @@ import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
 import { validate } from '../../helpers/validation';
 import template from './template.hbs';
-
+import withStore from './../../helpers/Store';
+import AuthController from './../../controllers/AuthController';
 interface SignInPageProps {
   title: string
 }
@@ -19,12 +20,12 @@ const loginLabel = new Label({
     name: 'login',
     isRequired: true,
     events: {
-      blur() {
-        validate(loginLabel.children.input, loginLabel);
-      },
-      focus() {
-        validate(loginLabel.children.input, loginLabel);
-      },
+      // blur() {
+      //   validate(loginLabel.children.input, loginLabel);
+      // },
+      // focus() {
+      //   validate(loginLabel.children.input, loginLabel);
+      // },
     },
   }),
 });
@@ -37,12 +38,12 @@ const passwordLabel = new Label({
     name: 'password',
     isRequired: true,
     events: {
-      blur() {
-        validate(passwordLabel.children.input, passwordLabel);
-      },
-      focus() {
-        validate(passwordLabel.children.input, passwordLabel);
-      },
+      // blur() {
+      //   validate(passwordLabel.children.input, passwordLabel);
+      // },
+      // focus() {
+      //   validate(passwordLabel.children.input, passwordLabel);
+      // },
     },
   }),
 });
@@ -68,7 +69,20 @@ export default class SignInPage extends Block {
     this.children.signInForm = new Form({
       labels,
       submitButton,
-      events: {},
+      events: {
+        submit: function() {
+          const values = labels.map((label: Label): string[] => {
+            const input = label.children.input;
+            const {name} = input.props;
+            const {value} = input._element;
+            return [name, value];
+          });
+
+
+          const signInData = Object.fromEntries(values);
+          AuthController.signin(signInData);
+        }
+      },
     });
   }
 

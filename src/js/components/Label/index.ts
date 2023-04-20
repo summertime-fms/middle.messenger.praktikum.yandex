@@ -7,7 +7,6 @@ interface LabelProps {
   label: string;
   input: Input,
   error: ErrorMessage,
-
 }
 export default class Label extends Block {
   constructor(props: LabelProps) {

@@ -60,24 +60,37 @@ const validateInput = (input: Input): string | boolean => {
 
 type Errors = Record<string, string>
 
-export const validateForm = (inputs: Input[]): Errors => {
+const renderErrors = (labels: Label[], errors: Errors) => {
+  Object.entries(errors).forEach(([key, value]) => {
+    const label: Label = labels.filter((label: Label) => key === label.children.input._element.name)[0];
+    console.log(label)
+    const errorElem = label.children.error;
+    errorElem.setProps({
+      errorContent: value,
+    });
+  })
+}
+
+export const validateForm = (labels: Label[]): boolean => {
   const errors: Errors = {};
+  const inputs = labels.map((label) => {
+    return label.children.input
+  })
+
+
   inputs.forEach((input) => {
-    const { name } = input.element;
+    const { name } = input._element;
     const result: string | boolean = validateInput(input);
     if (typeof result === 'string') {
       errors[name] = result;
     }
   });
 
-  return errors;
-};
+  let isValid: boolean = Object.values(errors).length === 0;
 
-export const validate = (input: Input, label: Label): void => {
-  const errorElem = label.children.error;
-  const validateResult = validateInput(input);
-  const errorContent = typeof validateResult === 'boolean' ? '' : validateResult;
-  errorElem.setProps({
-    errorContent,
-  });
+  if (!isValid) {
+    renderErrors(labels, errors)
+  }
+
+  return isValid;
 };

@@ -8,7 +8,7 @@ export enum FETCH_METHODS {
 }
 
 /* eslint-enable */
-type HTTPMethod = (url: string, options?: Options) => Promise<unknown>
+type HTTPMethod = (path: string, options?: Options, timeout?: number) => Promise<unknown>
 
 const queryStringify = (data: object): string => {
   if (typeof data !== 'object') {
@@ -27,31 +27,38 @@ type Options = {
 
 export default class HTTPTransport {
   private url: string;
-  static BASE_API_URL = 'ya-praktikum.tech/api/v2';
+  static BASE_API_URL = 'https://ya-praktikum.tech/api/v2';
 
   constructor(endpoint: string) {
     this.url = HTTPTransport.BASE_API_URL + endpoint;
   };
 
-  get: HTTPMethod = (url, options = {}) => {
+  get: HTTPMethod = (path, options = {}) => {
     const data = options.data;
+    let url = this.url + path;
 
     if (data) {
-      this.url = this.url + queryStringify(data);
+      url = url + queryStringify(data);
     }
 
     return this.request(url, {...options, method: FETCH_METHODS.GET}, options.timeout);
   }
 
-  post: HTTPMethod = (url: string, options: Options) => {
+  post: HTTPMethod = (path: string, options: Options) => {
+    let url = this.url + path;
+
     return this.request(url, {...options, method: FETCH_METHODS.POST}, options.timeout);
   };
 
-  put: HTTPMethod = (url: string, options: Options) => {
+  put: HTTPMethod = (path: string, options: Options) => {
+    let url = this.url + path;
+
     return this.request(url, {...options, method: FETCH_METHODS.PUT}, options.timeout);
   };
 
-  delete: HTTPMethod = (url: string, options: Options) => {
+  delete: HTTPMethod = (path: string, options: Options) => {
+    let url = this.url + path;
+
     return this.request(url, {...options, method: FETCH_METHODS.DELETE}, options.timeout);
   };
 
@@ -80,7 +87,7 @@ export default class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
       }
     })
   };
