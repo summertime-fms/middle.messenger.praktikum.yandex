@@ -1,4 +1,4 @@
-import {RouterInstance as Router} from './js/helpers/Router';
+import Router from './js/helpers/Router';
 import signInPage from './js/pages/signIn';
 import signUpPage from './js/pages/signUp';
 import ChatPage from './js/pages/chat';
@@ -20,7 +20,8 @@ const PAGES = {
 };
 
 window.addEventListener('DOMContentLoaded', async () => {
-  Router.use(Routes.signIn, PAGES.signIn);
-  Router.start();
-  Router.go(Routes.signIn)
+  Router.use(Routes.signIn, PAGES.signIn)
+        .use(Routes.signUp, PAGES.signUp)
+        .start();
+  Router.go(Routes.signIn);
 });

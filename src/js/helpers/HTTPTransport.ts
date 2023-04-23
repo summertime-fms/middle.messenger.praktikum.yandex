@@ -44,16 +44,19 @@ export default class HTTPTransport {
     return this.request(url, {...options, method: FETCH_METHODS.GET}, options.timeout);
   }
 
-  post: HTTPMethod = (path: string, options: Options) => {
+  post: HTTPMethod = (path: string, data: unknown) => {
     let url = this.url + path;
-
-    return this.request(url, {...options, method: FETCH_METHODS.POST}, options.timeout);
+    return this.request(url, {
+      method: FETCH_METHODS.POST,
+      data,
+      });
   };
 
   put: HTTPMethod = (path: string, options: Options) => {
     let url = this.url + path;
 
-    return this.request(url, {...options, method: FETCH_METHODS.PUT}, options.timeout);
+    return this.request(url,
+      {...options, method: FETCH_METHODS.PUT}, options.timeout);
   };
 
   delete: HTTPMethod = (path: string, options: Options) => {
@@ -64,13 +67,11 @@ export default class HTTPTransport {
 
   request = (url: string, options: Options, timeout = 5000) => {
     let {method, data, headers = {}} = options;
-
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const isGet = method === FETCH_METHODS.GET;
 
-      xhr.open(
-        method!, url);
+      xhr.open(method!, url);
 
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
@@ -79,6 +80,10 @@ export default class HTTPTransport {
       xhr.onload = function() {
         resolve(xhr);
       }
+
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.withCredentials = true;
+      xhr.responseType = 'json';
 
       xhr.onabort = reject;
       xhr.onerror = reject;

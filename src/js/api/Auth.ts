@@ -36,6 +36,7 @@ export class AuthAPI extends BaseAPI {
   }
 
   signin(data: SignInData) {
+    console.log(data)
     return this.http.post('/signin', data);
   }
 

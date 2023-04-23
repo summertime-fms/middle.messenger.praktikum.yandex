@@ -4,10 +4,9 @@ import Label from '../../components/Label';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
-import { validate } from '../../helpers/validation';
 import template from './template.hbs';
-import withStore from './../../helpers/Store';
 import AuthController from './../../controllers/AuthController';
+import {Link} from "../../components/Link";
 interface SignInPageProps {
   title: string
 }
@@ -19,14 +18,7 @@ const loginLabel = new Label({
     type: 'text',
     name: 'login',
     isRequired: true,
-    events: {
-      // blur() {
-      //   validate(loginLabel.children.input, loginLabel);
-      // },
-      // focus() {
-      //   validate(loginLabel.children.input, loginLabel);
-      // },
-    },
+    events: {},
   }),
 });
 
@@ -37,14 +29,7 @@ const passwordLabel = new Label({
     type: 'password',
     name: 'password',
     isRequired: true,
-    events: {
-      // blur() {
-      //   validate(passwordLabel.children.input, passwordLabel);
-      // },
-      // focus() {
-      //   validate(passwordLabel.children.input, passwordLabel);
-      // },
-    },
+    events: {},
   }),
 });
 
@@ -84,8 +69,17 @@ export default class SignInPage extends Block {
         }
       },
     });
-  }
 
+    this.children.signUpLink = new Link({
+      text: 'Have no account? Sign up!',
+      class: 'auth__sign-up',
+      to: '/sign-up',
+      events: {
+      }
+    })
+
+    console.log(this.children.signUpLink)
+  }
   componentDidMount() {
 
   }

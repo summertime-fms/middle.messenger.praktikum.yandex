@@ -1,5 +1,8 @@
 import Block from './Block';
-import {isEqual} from './utils';
+
+function isEqual(lhs: string, rhs: string): boolean {
+  return lhs === rhs;
+}
 
 function render(query: string, block: Block) {
   const root = document.querySelector(query);
@@ -15,118 +18,99 @@ function render(query: string, block: Block) {
   return root;
 }
 
-type RouteProps = {
-  rootQuery: string
-}
-
 class Route {
-  private _pathname: string;
-  private readonly _blockClass: Block;
-  private _block: Block | null;
-  private _props: RouteProps
-  constructor(pathname: string, view: Block, props: RouteProps) {
-    this._pathname = pathname;
-    this._blockClass = view;
-    this._block = null;
-    this._props = props;
-  }
+  private block: Block | null = null;
 
-  navigate(pathname: string) {
-    if (this.match(pathname)) {
-      this._pathname = pathname;
-      this.render();
-    }
+  constructor(
+    private pathname: string,
+    private readonly blockClass: typeof Block,
+    private readonly query: string) {
   }
 
   leave() {
-    if (this._block) {
-      this._block._hide();
-    }
+    this.block = null;
   }
 
   match(pathname: string) {
-    return isEqual(pathname, this._pathname);
+    return isEqual(pathname, this.pathname);
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this._blockClass();
-      console.log(this._props.rootQuery)
-      render(this._props.rootQuery, this._block!);
+    if (!this.block) {
+      this.block = new this.blockClass({});
+
+      render(this.query, this.block);
       return;
     }
-
-    this._block._show();
   }
 }
 
-class Router  {
-  private readonly __instance: Router;
-  private history: History;
-  _currentRoute: Route | null;
-  _rootQuery: string;
-  private routes: Route[];
-  constructor(rootQuery: string) {
-    if (this.__instance) {
-      return this.__instance;
+class Router {
+  private static __instance: Router;
+  private routes: Route[] = [];
+  private currentRoute: Route | null = null;
+  private history = window.history;
+
+  constructor(private readonly rootQuery: string) {
+    if (Router.__instance) {
+      return Router.__instance;
     }
 
     this.routes = [];
-    this.history = window.history;
-    this._currentRoute = null;
-    this._rootQuery = rootQuery;
 
-    this.__instance = this;
+    Router.__instance = this;
   }
 
-  use(pathname: string, block: Block) {
-    const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+  public use(pathname: string, block: typeof Block) {
+    const route = new Route(pathname, block, this.rootQuery);
     this.routes.push(route);
+
     return this;
   }
 
-  start() {
-    window.addEventListener('popstate', (event: PopStateEvent) => {
+  public start() {
+    window.onpopstate = (event: PopStateEvent) => {
       const target = event.currentTarget as Window;
 
       this._onRoute(target.location.pathname);
-    });
+    }
 
     this._onRoute(window.location.pathname);
   }
 
-  _onRoute(pathname: string) {
+  private _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
 
-    if (this._currentRoute) {
-      this._currentRoute.leave();
+    if (!route) {
+      return;
     }
 
-    this._currentRoute = route;
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute.leave();
+    }
+
+    this.currentRoute = route;
+
     route.render();
   }
 
-  go(pathname: string) {
+  public go(pathname: string) {
     this.history.pushState({}, '', pathname);
+
     this._onRoute(pathname);
   }
 
-  back() {
-    window.history.back();
+  public back() {
+    this.history.back();
   }
 
-  forward() {
-    window.history.forward();
+  public forward() {
+    this.history.forward();
   }
 
-  getRoute(pathname: string) {
-    const result = this.routes.find(route => route.match(pathname));
-    if (!result) {
-      throw new Error(`No such root - ${pathname}`);
-    }
-    return result;
+  private getRoute(pathname: string) {
+    return this.routes.find(route => route.match(pathname));
   }
 }
 
-export const RouterInstance = new Router('#app')
-
+export default new Router('#app');

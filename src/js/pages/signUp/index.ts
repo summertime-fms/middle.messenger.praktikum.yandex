@@ -5,8 +5,8 @@ import Form from '../../components/Form';
 import ErrorMessage from '../../components/ErrorMessage';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import { validate } from '../../helpers/validation';
-
+import AuthController from "../../controllers/AuthController";
+import {Link} from "../../components/Link";
 interface SignUpPageProps {
   title: string
 }
@@ -19,12 +19,7 @@ const firstNameLabel = new Label({
     name: 'first_name',
     isRequired: true,
     events: {
-      blur() {
-        validate(firstNameLabel.children.input, firstNameLabel);
-      },
-      focus() {
-        validate(firstNameLabel.children.input, firstNameLabel);
-      },
+
     },
   }),
 });
@@ -37,12 +32,7 @@ const secondNameLabel = new Label({
     name: 'second_name',
     isRequired: true,
     events: {
-      blur() {
-        validate(secondNameLabel.children.input, secondNameLabel);
-      },
-      focus() {
-        validate(secondNameLabel.children.input, secondNameLabel);
-      },
+
     },
   }),
 });
@@ -55,12 +45,7 @@ const loginLabel = new Label({
     name: 'login',
     isRequired: true,
     events: {
-      blur() {
-        validate(loginLabel.children.input, loginLabel);
-      },
-      focus() {
-        validate(loginLabel.children.input, loginLabel);
-      },
+
     },
   }),
 });
@@ -73,12 +58,7 @@ const passwordLabel = new Label({
     name: 'password',
     isRequired: true,
     events: {
-      blur() {
-        validate(passwordLabel.children.input, passwordLabel);
-      },
-      focus() {
-        validate(passwordLabel.children.input, passwordLabel);
-      },
+
     },
   }),
 });
@@ -91,33 +71,24 @@ const phoneLabel = new Label({
     name: 'phone',
     isRequired: true,
     events: {
-      blur() {
-        validate(phoneLabel.children.input, phoneLabel);
-      },
-      focus() {
-        validate(phoneLabel.children.input, phoneLabel);
-      },
+
     },
   }),
 });
 
 const emailLabel = new Label({
-  label: 'Phone',
+  label: 'Email',
   error: new ErrorMessage({}),
   input: new Input({
-    type: 'tel',
-    name: 'phone',
+    type: 'email',
+    name: 'email',
     isRequired: true,
     events: {
-      blur() {
-        validate(emailLabel.children.input, emailLabel);
-      },
-      focus() {
-        validate(emailLabel.children.input, emailLabel);
-      },
+
     },
   }),
 });
+
 
 const submitButton: Button = new Button({
   text: 'Sign up',
@@ -142,10 +113,32 @@ export default class SignUpPage extends Block {
 
   init() {
     this.props.title = 'Sign Up';
+    this.children.signInLink = new Link({
+      text: 'Already have an account?',
+      class: 'auth__sign-up',
+      to: '/',
+      events: {}
+    });
+
+    console.log(this.children.signInLink)
+
     this.children.signUpForm = new Form({
       labels,
       submitButton,
-      events: {},
+      events: {
+        submit() {
+          const values = labels.map((label: Label): string[] => {
+            const input = label.children.input;
+            const {name} = input.props;
+            const {value} = input._element;
+            return [name, value];
+          });
+
+
+          const signInData = Object.fromEntries(values);
+          AuthController.signup(signInData);
+        }
+      },
     });
   }
 

@@ -2,8 +2,7 @@ import Label from '../Label';
 import Button from '../Button';
 import Block from '../../helpers/Block';
 import template from './template.hbs';
-import {validate, validateForm} from '../../helpers/validation';
-import Input from "../Input";
+import {validateForm} from '../../helpers/validation';
 
 interface FormProps {
   labels: Array<Label>;
@@ -28,15 +27,9 @@ export default class Form extends Block {
 
     props.events.submit = internalSubmit;
     super(props);
-
-    this.isValid = null;
   }
 
   render() {
     return this.compile(template, this.props);
-  }
-
-  getInputs() {
-    return this.children.labels.map(label => label.children.input)
   }
 }
