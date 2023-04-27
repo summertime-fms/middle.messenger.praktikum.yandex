@@ -42,7 +42,6 @@ export default abstract class Block {
   }
 
   init() {
-
   }
 
   _init() {

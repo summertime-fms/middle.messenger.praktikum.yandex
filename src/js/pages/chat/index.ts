@@ -7,7 +7,10 @@ import Message from '../../components/Message';
 import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels } from '../../helpers/mocks';
 import Settings from './Blocks/Settings';
 import Form from '../../components/Form';
-
+import authController from "../../controllers/AuthController";
+import {withStore} from "../../helpers/Store";
+import {Link} from "../../components/Link";
+import AuthController from "../../controllers/AuthController";
 const messages: Message[] = messagesArr.map((message) => new Message(message));
 
 interface ChatPageProps {
@@ -88,13 +91,26 @@ export default class ChatPage extends Block {
         },
       },
     });
+    this.children.logoutLink = new Link({
+      text: 'Logout',
+      class: 'chats__settings',
+      events: {
+        click() {
+          AuthController.logout()
+        }
+      }
+    });
   }
 
   componentDidMount() {
-
+    authController.fetchUser()
   }
 
   render() {
     return this.compile(template, this.props);
   }
 }
+
+const withUser = withStore((state) => ({...state.user}));
+
+export const Chat = withUser(ChatPage);

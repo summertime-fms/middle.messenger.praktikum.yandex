@@ -3,6 +3,7 @@ import Button from '../Button';
 import Block from '../../helpers/Block';
 import template from './template.hbs';
 import {validateForm} from '../../helpers/validation';
+import Input from "../Input";
 
 interface FormProps {
   labels: Array<Label>;
@@ -27,6 +28,19 @@ export default class Form extends Block {
 
     props.events.submit = internalSubmit;
     super(props);
+  }
+
+  init() {
+    this.dispatchComponentDidMount()
+  }
+
+  componentDidMount() {
+    const labels = this.children.labels;
+    labels.forEach((label: Label) => {
+      const input: Input = label.children.input;
+      input.element.value = '';
+      input.element.parentElement.classList.remove('active');
+    });
   }
 
   render() {

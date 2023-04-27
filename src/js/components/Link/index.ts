@@ -12,7 +12,14 @@ export default class BaseLink extends Block {
     super({
       ...props,
       events: {
-        click: () => this.navigate()
+        click: () => {
+          if (props.events?.click) {
+            const handler = props.events?.click;
+            handler();
+          } else {
+            this.navigate()
+          }
+        }
       },
     });
   }

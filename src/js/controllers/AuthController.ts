@@ -1,6 +1,6 @@
 import {AuthAPI, SignUpData, SignInData} from "../api/Auth";
 import {store} from "../helpers/Store";
-
+import router, {Routes} from './../helpers/Router';
 class AuthController  {
   private api: AuthAPI;
   constructor() {
@@ -9,27 +9,29 @@ class AuthController  {
   }
 
   signup(data: SignUpData) {
-    try {
-      this.api.signup(data)
-    } catch (err) {
-      console.error(err)
-    }
+    this.api.signup(data)
+      .then(() => {
+        router.go(Routes.signIn);
+      })
+      .catch(console.log);
   }
 
-  signin(data: SignInData) {
+  async signin(data: SignInData) {
     try {
-      this.api.signin(data)
+      await this.api.signin(data);
+
+      await this.fetchUser();
     } catch (err) {
       console.error(err)
     }
   }
 
   logout() {
-    try {
-      this.api.logout()
-    } catch (err) {
-      console.error(err)
-    }
+    this.api.logout()
+      .then(() => {
+        router.go(Routes.signIn);
+      })
+      .catch(console.log);
   }
 
   fetchUser() {
@@ -38,6 +40,7 @@ class AuthController  {
       this.api.getUser()
         .then((user) => {
           store.set('user.data', user)
+          router.go(Routes.chat)
         }).catch(err => {
           store.set('user.error', err)
       }).finally(() => {

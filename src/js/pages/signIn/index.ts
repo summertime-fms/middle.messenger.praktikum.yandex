@@ -7,6 +7,7 @@ import ErrorMessage from '../../components/ErrorMessage';
 import template from './template.hbs';
 import AuthController from './../../controllers/AuthController';
 import {Link} from "../../components/Link";
+import {withStore} from "../../helpers/Store";
 interface SignInPageProps {
   title: string
 }
@@ -44,7 +45,7 @@ const labels: Array<Label> = [
   loginLabel, passwordLabel,
 ];
 
-export default class SignInPage extends Block {
+export default class SignInPageBase extends Block {
   constructor(props: SignInPageProps) {
     super(props);
   }
@@ -77,14 +78,14 @@ export default class SignInPage extends Block {
       events: {
       }
     })
-
-    console.log(this.children.signUpLink)
-  }
-  componentDidMount() {
-
   }
 
   render() {
     return this.compile(template, this.props);
   }
 }
+
+
+const withStoreWrapper = withStore((state) => ({...state.isLoading}));
+
+export const signInPage = withStoreWrapper(SignInPageBase);

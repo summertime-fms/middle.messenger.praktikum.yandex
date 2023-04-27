@@ -1,5 +1,13 @@
 import Block from './Block';
 
+export enum Routes {
+  signIn= '/',
+  signUp = '/sign-up',
+  chat = '/chat',
+  settings = '/settings',
+  error = '/error'
+}
+
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
 }

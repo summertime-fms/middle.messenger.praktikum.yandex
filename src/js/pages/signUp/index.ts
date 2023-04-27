@@ -120,8 +120,6 @@ export default class SignUpPage extends Block {
       events: {}
     });
 
-    console.log(this.children.signInLink)
-
     this.children.signUpForm = new Form({
       labels,
       submitButton,
