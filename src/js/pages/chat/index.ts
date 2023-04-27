@@ -1,56 +1,26 @@
 import Block from '../../helpers/Block';
-import ChatsList from './Blocks/ChatsList';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
+
+import ChatsList from './Blocks/ChatsList';
 import ChatWindow from './Blocks/ChatWindow';
 import Button from '../../components/Button';
 import Message from '../../components/Message';
-import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels } from '../../helpers/mocks';
 import Settings from './Blocks/Settings';
+import Dialog, {DialogProps} from "../../components/Dialog";
 import Form from '../../components/Form';
-import { withStore} from "../../helpers/Store";
 import {Link} from "../../components/Link";
+
+import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels, dialogsData } from '../../helpers/mocks';
+
+import { withStore} from "../../helpers/Store";
 import AuthController from "../../controllers/AuthController";
+
 const messages: Message[] = messagesArr.map((message) => new Message(message));
-console.log(styles)
+const dialogs: Dialog[] = dialogsData.map((dialog: DialogProps) => new Dialog(dialog));
 interface ChatPageProps {
   isSettingsOpened?: boolean
 }
-
-const chats = [
-  {
-    id: 1,
-    name: 'Имя',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: true,
-  },
-  {
-    id: 2,
-    name: 'Имя 2',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: false,
-  },
-  {
-    id: 3,
-    name: 'Имя 3',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: true,
-  },
-  {
-    id: 4,
-    name: 'Имя 4',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: true,
-  },
-];
 
 const settingsForm = new Form({
   labels,
@@ -68,7 +38,7 @@ export default class ChatPage extends Block {
 
   init() {
     this.children.chatsList = new ChatsList({
-      chats
+      dialogs
     });
 
     this.children.chatWindow = new ChatWindow({

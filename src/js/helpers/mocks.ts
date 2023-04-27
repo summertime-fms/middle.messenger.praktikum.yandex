@@ -163,7 +163,6 @@ const phoneLabel = new Label({
     },
   }),
 });
-
 export const settingsFormLabels: Label[] = [
   displayNameLabel,
   firstNameLabel,
@@ -172,4 +171,39 @@ export const settingsFormLabels: Label[] = [
   loginLabel,
   passwordLabel,
   phoneLabel,
+];
+
+export const dialogsData = [
+  {
+    id: 1,
+    name: 'Имя',
+    preview: 'Сообщение сообщение сообщение',
+    time: '15:29',
+    totalNewMessages: 10,
+    isRead: true,
+  },
+  {
+    id: 2,
+    name: 'Имя 2',
+    preview: 'Сообщение сообщение сообщение',
+    time: '15:29',
+    totalNewMessages: 10,
+    isRead: false,
+  },
+  {
+    id: 3,
+    name: 'Имя 3',
+    preview: 'Сообщение сообщение сообщение',
+    time: '15:29',
+    totalNewMessages: 10,
+    isRead: true,
+  },
+  {
+    id: 4,
+    name: 'Имя 4',
+    preview: 'Сообщение сообщение сообщение',
+    time: '15:29',
+    totalNewMessages: 10,
+    isRead: true,
+  },
 ];

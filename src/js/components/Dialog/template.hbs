@@ -1,0 +1,21 @@
+<li class="{{styles.dialog}}">
+  <div class="{{styles.dialogWrapper}}">
+    <div class="{{styles.image}}">
+      <img src="./../../../../img/avatar.png" alt="Аватар пользователя {{name}}" decoding="async" loading="lazy">
+    </div>
+
+    <span class="{{styles.name}}">
+            {{name}}
+          </span>
+
+    <p>
+      {{this.preview}}
+    </p>
+
+    <span class="{{styles.total}}">
+            +{{totalNewMessages}}
+          </span>
+
+    <time class="{{styles.time}}" dateTime="{{time}}">{{time}}</time>
+  </div>
+</li>
