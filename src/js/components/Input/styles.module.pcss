@@ -1,0 +1,16 @@
+input:not([type="checkbox"], [type="radio"]) {
+  height: 30px;
+  padding: 0 8px;
+  line-height: 30px;
+  display: block;
+  width: 100%;
+  font-family: $secondFont;
+  font-weight: 500;
+  font-size: 14px;
+  color: $black;
+  border-bottom: 2px solid $accentColor;
+
+  &:focus + span {
+    transform: scale(0.75) translate(-8px, -35px);
+  }
+}

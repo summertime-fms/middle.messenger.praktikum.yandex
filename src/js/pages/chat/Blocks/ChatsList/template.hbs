@@ -1,12 +1,12 @@
-<ul class="chats__list">
+<ul class="{{styles.chatsList}}">
     {{#each chats}}
-      <li>
+      <li class="{{styles.chatsItem}}">
         <div class="chats__item">
           <div class="chats__image">
             <img src="./../../../../img/avatar.png" alt="Аватар пользователя {{this.name}}" decoding="async" loading="lazy">
           </div>
 
-          <span class="chats__name">
+          <span class="{{styles.chatsName}}">
             {{this.name}}
           </span>
 

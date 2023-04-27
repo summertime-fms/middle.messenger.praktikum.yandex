@@ -1,5 +1,6 @@
 import Block from '../../helpers/Block';
 import template from './template.hbs';
+import styles from './styles.module.pcss';
 import withRouter from "../../hocs/withRouter";
 interface LinkProps {
   text: string;
@@ -29,7 +30,7 @@ export default class BaseLink extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 }
 

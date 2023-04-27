@@ -1,17 +1,18 @@
 import Block from '../../helpers/Block';
 import ChatsList from './Blocks/ChatsList';
 import template from './template.hbs';
+import styles from './styles.module.pcss';
 import ChatWindow from './Blocks/ChatWindow';
 import Button from '../../components/Button';
 import Message from '../../components/Message';
 import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels } from '../../helpers/mocks';
 import Settings from './Blocks/Settings';
 import Form from '../../components/Form';
-import {store, withStore} from "../../helpers/Store";
+import { withStore} from "../../helpers/Store";
 import {Link} from "../../components/Link";
 import AuthController from "../../controllers/AuthController";
 const messages: Message[] = messagesArr.map((message) => new Message(message));
-
+console.log(styles)
 interface ChatPageProps {
   isSettingsOpened?: boolean
 }
@@ -67,7 +68,7 @@ export default class ChatPage extends Block {
 
   init() {
     this.children.chatsList = new ChatsList({
-      chats,
+      chats
     });
 
     this.children.chatWindow = new ChatWindow({
@@ -106,7 +107,7 @@ export default class ChatPage extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 }
 

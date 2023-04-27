@@ -1,4 +1,4 @@
-<div class="auth modal wrapper">
+<div class="{{ styles.auth }}">
     <div class="modal__inner">
         <h2 class="title title--h2">
           {{title}}
@@ -6,8 +6,9 @@
 
       {{{signInForm}}}
 
-      {{{signUpLink}}}
       {{{autoCompleteButton}}}
+      {{{signUpLink}}}
+
       <div class="error">{{{error}}}</div>
     </div>
 

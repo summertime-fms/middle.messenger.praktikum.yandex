@@ -2,6 +2,7 @@ import Input from '../Input';
 import ErrorMessage from '../ErrorMessage';
 import Block from '../../helpers/Block';
 import template from './template.hbs';
+import styles from './styles.module.pcss';
 
 interface LabelProps {
   label: string;
@@ -14,6 +15,6 @@ export default class Label extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 }

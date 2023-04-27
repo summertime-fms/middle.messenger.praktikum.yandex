@@ -1,0 +1,35 @@
+.chatsList {
+  overflow: auto;
+  height: calc(100% - 81px);
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $accentColor;
+    border-radius: 5px;
+  }
+
+  li > div {
+    position: relative;
+    display: grid;
+    align-items: center;
+    grid-template-rows: auto auto;
+    grid-template-columns: 72px 1fr;
+    gap: 0 12px;
+    padding: 10px;
+    border-bottom: 1px solid $gray2;
+    cursor: pointer;
+    transition: background-color $trans;
+
+    &:hover {
+      background-color: rgba($accentColor, 0.1);
+    }
+  }
+}
+
+.chatsName {
+  color: red;
+}

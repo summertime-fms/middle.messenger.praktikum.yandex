@@ -4,6 +4,7 @@ import Block from '../../helpers/Block';
 import template from './template.hbs';
 import {validateForm} from '../../helpers/validation';
 import Input from "../Input";
+import styles from './styles.module.pcss';
 
 interface FormProps {
   labels: Array<Label>;
@@ -44,6 +45,6 @@ export default class Form extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 }

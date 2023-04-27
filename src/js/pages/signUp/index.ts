@@ -1,6 +1,7 @@
 import Block from '../../helpers/Block';
 import Label from '../../components/Label';
 import template from './template.hbs';
+import styles from './styles.module.pcss';
 import Form from '../../components/Form';
 import ErrorMessage from '../../components/ErrorMessage';
 import Button from '../../components/Button';
@@ -145,6 +146,6 @@ export default class SignUpPage extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 }

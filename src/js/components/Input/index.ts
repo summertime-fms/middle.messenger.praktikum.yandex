@@ -1,5 +1,6 @@
 import Block from '../../helpers/Block';
 import template from './template.hbs';
+import styles from './styles.module.pcss';
 
 interface InputProps {
   type: string;
@@ -32,6 +33,6 @@ export default class Input extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 }

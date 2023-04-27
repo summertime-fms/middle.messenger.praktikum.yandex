@@ -5,6 +5,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
 import template from './template.hbs';
+import styles from './styles.module.pcss';
 import AuthController from './../../controllers/AuthController';
 import {Link} from "../../components/Link";
 import {withStore} from "../../helpers/Store";
@@ -41,6 +42,7 @@ const submitButton: Button = new Button({
   classes: 'button form__button',
 });
 
+
 const labels: Array<Label> = [
   loginLabel, passwordLabel,
 ];
@@ -72,8 +74,9 @@ export default class SignInPageBase extends Block {
     });
 
     this.children.autoCompleteButton = new Button({
-      text: 'Fill in',
+      text: 'Autocomplete',
       type: 'button',
+      classes: styles.autocomplete,
       events: {
         click: () => {
           this.autoCompleteFields();
@@ -91,7 +94,7 @@ export default class SignInPageBase extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 
   get inputs() {

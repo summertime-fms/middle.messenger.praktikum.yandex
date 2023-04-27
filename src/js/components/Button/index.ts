@@ -1,5 +1,6 @@
 import Block from '../../helpers/Block';
 import template from './template.hbs';
+import styles from './styles.module.pcss';
 
 export interface ButtonProps {
   text: string;
@@ -14,6 +15,6 @@ export default class Button extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles});
   }
 }
