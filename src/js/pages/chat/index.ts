@@ -7,8 +7,7 @@ import Message from '../../components/Message';
 import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels } from '../../helpers/mocks';
 import Settings from './Blocks/Settings';
 import Form from '../../components/Form';
-import authController from "../../controllers/AuthController";
-import {withStore} from "../../helpers/Store";
+import {store, withStore} from "../../helpers/Store";
 import {Link} from "../../components/Link";
 import AuthController from "../../controllers/AuthController";
 const messages: Message[] = messagesArr.map((message) => new Message(message));
@@ -103,7 +102,7 @@ export default class ChatPage extends Block {
   }
 
   componentDidMount() {
-    authController.fetchUser()
+    // authController.fetchUser()
   }
 
   render() {

@@ -17,13 +17,25 @@ class AuthController  {
   }
 
   async signin(data: SignInData) {
-    try {
-      await this.api.signin(data);
-
-      await this.fetchUser();
-    } catch (err) {
-      console.error(err)
-    }
+    store.set('auth.isLoading', true)
+      await this.api.signin(data)
+        .then((response: XMLHttpRequest) => {
+          switch(response.status) {
+            case 401:
+              throw new Error('Неверный логин или пароль. Попробуйте ещё раз.')
+            case 400:
+              throw new Error('Неверный формат данных.')
+            case 500:
+              throw new Error('Внутренняя ошибка сервера. Попробуйте позже.')
+          }
+        }).then( async () => {
+          await this.fetchUser();
+          router.go(Routes.chat);
+        }).catch(err => {
+          store.set('auth.error', err.message);
+        }).finally(() => {
+          store.set('auth.isLoading', false)
+        });
   }
 
   logout() {
@@ -38,9 +50,9 @@ class AuthController  {
     store.set('user.isLoading', true)
 
       this.api.getUser()
-        .then((user) => {
+        .then((res: XMLHttpRequest) => {
+          const user = res.response;
           store.set('user.data', user)
-          router.go(Routes.chat)
         }).catch(err => {
           store.set('user.error', err)
       }).finally(() => {

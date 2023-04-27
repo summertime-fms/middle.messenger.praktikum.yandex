@@ -5,7 +5,7 @@ export interface ButtonProps {
   text: string;
   type: string;
   events: Record<string, (evt:any) => void>;
-  classes: string
+  classes?: string
 }
 
 export default class Button extends Block {

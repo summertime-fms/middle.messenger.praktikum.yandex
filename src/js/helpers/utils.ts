@@ -2,25 +2,40 @@ type Indexed<T = unknown> = {
   [key in string]: T;
 };
 
-export function set(obj: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
-  if (typeof path !== 'string') {
-    throw new Error('path must be string')
-  }
-  if (Array.isArray(obj) || typeof obj !== 'object') {
-    return obj;
-  }
-
-  let pathArr: string[] = path.split('.');
-  pathArr.reduce((acc: any, item: string, index: number) => {
-    if (pathArr.length - 1 != index) {
-      acc[item] = {};
-    } else {
-      acc[item] = value
+export function merge(lhs: Indexed, rhs: Indexed): Indexed {
+  for (let p in rhs) {
+    if (!rhs.hasOwnProperty(p)) {
+      continue;
     }
-    return acc[item]
-  }, obj)
 
-  return obj;
+    try {
+      if (rhs[p].constructor === Object) {
+        rhs[p] = merge(lhs[p] as Indexed, rhs[p] as Indexed);
+      } else {
+        lhs[p] = rhs[p];
+      }
+    } catch (e) {
+      lhs[p] = rhs[p];
+    }
+  }
+
+  return lhs;
+}
+
+export function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
+  if (typeof object !== 'object' || object === null) {
+    return object;
+  }
+
+  if (typeof path !== 'string') {
+    throw new Error('path must be string');
+  }
+
+  const result = path.split('.').reduceRight<Indexed>((acc, key) => ({
+    [key]: acc,
+  }), value as any);
+
+  return merge(object as Indexed, result);
 }
 
 export const trim = (str: string, filter?: string): string  => {

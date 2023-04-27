@@ -71,6 +71,16 @@ export default class SignInPageBase extends Block {
       },
     });
 
+    this.children.autoCompleteButton = new Button({
+      text: 'Fill in',
+      type: 'button',
+      events: {
+        click: () => {
+          this.autoCompleteFields();
+        }
+      }
+    });
+
     this.children.signUpLink = new Link({
       text: 'Have no account? Sign up!',
       class: 'auth__sign-up',
@@ -83,9 +93,20 @@ export default class SignInPageBase extends Block {
   render() {
     return this.compile(template, this.props);
   }
+
+  get inputs() {
+    return this.children.signInForm.children.labels.map((label: Label) => label.children.input);
+  }
+
+  autoCompleteFields() {
+    const loginInput = this.inputs[0];
+    const passwordInput = this.inputs[1];
+
+    loginInput.element.value = 'rootroot';
+    passwordInput.element.value = 'RootRoot1'
+  }
 }
 
-
-const withStoreWrapper = withStore((state) => ({...state.isLoading}));
+const withStoreWrapper = withStore((state) => ({...state.auth}));
 
 export const signInPage = withStoreWrapper(SignInPageBase);
