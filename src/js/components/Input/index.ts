@@ -19,8 +19,8 @@ export default class Input extends Block {
       if (!parent) return;
 
       this.element!.value === ''
-        ? parent.classList.remove('active')
-        : parent.classList.add('active');
+        ? parent.removeAttribute('data-active')
+        : parent.setAttribute('data-active', '');
 
       if (externalChange) {
         externalChange();

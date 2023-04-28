@@ -61,6 +61,7 @@ export default class ChatPage extends Block {
         },
       },
     });
+
     this.children.logoutLink = new Link({
       text: 'Logout',
       class: 'chats__settings',
