@@ -1,21 +1,21 @@
-<div class="chat__right">
-  <div class="chat__right-header">
+<div class="{{styles.rightPanel}}">
+  <div class="{{styles.rightHeader}}">
     <span>Dialog</span>
   </div>
 
-  <div class="chat__window">
+  <div class="{{styles.chatWindow}}">
     {{{messages}}}
   </div>
 
-  <form class="chat__bottom">
-    <label class="chat__message">
+  <form class="{{styles.chatBottom}}">
+    <label class="{{styles.messageForm}}">
       <textarea name="message" class="textarea" placeholder="Введите ваше сообщение..."></textarea>
       <span class="visually-hidden">
                 Введите ваше сообщение...
             </span>
     </label>
 
-    <button type="submit" class="chat__send-button" aria-label="Отправить">
+    <button type="submit" class="{{styles.sendMessageButton}}" aria-label="Отправить">
       <svg xmlns="http://www.w3.org/2000/svg" width="41" height="37" viewBox="0 0 41 37" fill="none">
         <path
           d="M3.68763 12.0558L36.8543 1.46274C37.2421 1.30021 37.6765 1.24844 38.0984 1.31449C38.5203 1.38053 38.9092 1.56119 39.2121 1.83184C39.515 2.1025 39.7171 2.45 39.791 2.82702C39.8649 3.20405 39.807 3.59227 39.6251 3.93881L27.771 33.5771C27.6661 33.9884 27.4079 34.3557 27.0389 34.6188C26.6699 34.8819 26.2118 35.0251 25.7397 35.0251C25.2676 35.0251 24.8095 34.8819 24.4405 34.6188C24.0715 34.3557 23.8134 33.9884 23.7085 33.5771L18.4793 21.4388C18.3753 21.1821 18.2095 20.949 17.9934 20.7559C17.7774 20.5629 17.5166 20.4147 17.2293 20.3218L3.64596 15.6861C3.18668 15.5883 2.77823 15.3539 2.48754 15.0214C2.19685 14.6889 2.04117 14.278 2.04601 13.8561C2.05085 13.4342 2.21593 13.0263 2.51419 12.6992C2.81245 12.3721 3.2262 12.1453 3.68763 12.0558Z"
