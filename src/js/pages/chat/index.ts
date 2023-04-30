@@ -6,12 +6,12 @@ import ChatsList from './Blocks/ChatsList';
 import ChatWindow from './Blocks/ChatWindow';
 import Button from '../../components/Button';
 import Message from '../../components/Message';
-import Settings from './Blocks/Settings';
+import {SettingsPage} from './Blocks/Settings';
 import Dialog, {DialogProps} from "../../components/Dialog";
 import Form from '../../components/Form';
 import {Link} from "../../components/Link";
 
-import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels, dialogsData } from '../../helpers/mocks';
+import { messagesArr, dialogsData } from '../../helpers/mocks';
 
 import { withStore} from "../../helpers/Store";
 import AuthController from "../../controllers/AuthController";
@@ -22,13 +22,7 @@ interface ChatPageProps {
   isSettingsOpened?: boolean
 }
 
-const settingsForm = new Form({
-  labels,
-  submitButton,
-  events: {},
-});
-
-export default class ChatPage extends Block {
+export default class ChatPageBase extends Block {
   protected isSettingsOpened: boolean;
 
   constructor(props: ChatPageProps) {
@@ -36,7 +30,7 @@ export default class ChatPage extends Block {
     this.isSettingsOpened = false;
   }
 
-  init() {
+    init() {
     this.children.chatsList = new ChatsList({
       dialogs
     });
@@ -45,15 +39,10 @@ export default class ChatPage extends Block {
       messages,
     });
 
-    this.children.settingsModal = new Settings({
-      title: 'Settings',
-      isOpened: false,
-      form: settingsForm,
-    });
+    this.children.settingsModal = new SettingsPage({});
 
     this.children.settingsButton = new Button({
       text: 'Settings',
-      classes: 'chats__settings',
       type: 'button',
       events: {
         click: () => {
@@ -64,17 +53,13 @@ export default class ChatPage extends Block {
 
     this.children.logoutLink = new Link({
       text: 'Logout',
-      class: 'chats__settings',
       events: {
         click() {
           AuthController.logout()
         }
       }
     });
-  }
-
-  componentDidMount() {
-    // authController.fetchUser()
+    this.dispatchComponentDidMount();
   }
 
   render() {
@@ -82,6 +67,6 @@ export default class ChatPage extends Block {
   }
 }
 
-const withUser = withStore((state) => ({...state.user}));
+const withUser = withStore((state) => ({ ...state.user }));
 
-export const Chat = withUser(ChatPage);
+export const ChatPage = withUser(ChatPageBase);

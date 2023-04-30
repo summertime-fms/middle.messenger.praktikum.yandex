@@ -7,7 +7,7 @@ import Input from "../Input";
 import styles from './styles.module.pcss';
 
 interface FormProps {
-  labels: Array<Label>;
+  labels: Array<Label> | Label;
   submitButton: Button,
   events: Record<string, (arg?: any) => any>,
   isValid?: boolean | null

@@ -36,7 +36,6 @@ export class AuthAPI extends BaseAPI {
   }
 
   signin(data: SignInData) {
-    console.log(data)
     return this.http.post('/signin', data);
   }
 
@@ -45,7 +44,7 @@ export class AuthAPI extends BaseAPI {
   }
 
   getUser() {
-    return this.http.get<User>('/user');
+    return this.http.get('/user');
   }
 
   create = undefined;

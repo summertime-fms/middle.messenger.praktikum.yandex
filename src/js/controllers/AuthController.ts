@@ -10,8 +10,9 @@ class AuthController  {
 
   signup(data: SignUpData) {
     this.api.signup(data)
-      .then(() => {
-        router.go(Routes.signIn);
+      .then(async () => {
+        await this.fetchUser();
+        router.go(Routes.chat);
       })
       .catch(console.log);
   }
@@ -46,10 +47,10 @@ class AuthController  {
       .catch(console.log);
   }
 
-  fetchUser() {
+  async fetchUser() {
     store.set('user.isLoading', true)
 
-      this.api.getUser()
+      await this.api.getUser()
         .then((res: XMLHttpRequest) => {
           const user = res.response;
           store.set('user.data', user)
@@ -58,7 +59,6 @@ class AuthController  {
       }).finally(() => {
         store.set('user.isLoading', false)
       })
-
   }
 }
 

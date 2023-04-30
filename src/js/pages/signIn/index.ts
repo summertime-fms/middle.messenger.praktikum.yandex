@@ -7,8 +7,9 @@ import ErrorMessage from '../../components/ErrorMessage';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
 import AuthController from './../../controllers/AuthController';
-import {Link} from "../../components/Link";
-import {withStore} from "../../helpers/Store";
+import {Link} from '../../components/Link';
+import {withStore} from '../../helpers/Store';
+import authController from "./../../controllers/AuthController";
 interface SignInPageProps {
   title: string
 }
@@ -18,6 +19,7 @@ const loginLabel = new Label({
   error: new ErrorMessage({}),
   input: new Input({
     type: 'text',
+    value: 'test',
     name: 'login',
     isRequired: true,
     events: {},
@@ -84,6 +86,17 @@ export default class SignInPageBase extends Block {
       }
     });
 
+    this.children.logoutButton = new Button({
+      text: 'Logout',
+      type: 'button',
+      classes: styles.logout,
+      events: {
+        click: () => {
+          AuthController.logout();
+        }
+      }
+    });
+
     this.children.signUpLink = new Link({
       text: 'Have no account? Sign up!',
       class: 'auth__sign-up',
@@ -111,5 +124,5 @@ export default class SignInPageBase extends Block {
 }
 
 const withStoreWrapper = withStore((state) => ({...state.auth}));
-
-export const signInPage = withStoreWrapper(SignInPageBase);
+const signInPage = withStoreWrapper(SignInPageBase);
+export {signInPage}

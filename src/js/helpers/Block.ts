@@ -18,7 +18,7 @@ export default abstract class Block {
 
   protected props;
 
-  private events: Record<string, () => void>;
+  private readonly events: Record<string, () => void>;
 
   public children: Record<string, any>;
 
@@ -121,6 +121,7 @@ export default abstract class Block {
   private _render() {
     const fragment: any = this.render(); // временно any
     const el = fragment.firstElementChild;
+
 
     if (this._element) {
       this._element.replaceWith(el);

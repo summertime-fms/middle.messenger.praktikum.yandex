@@ -13,10 +13,6 @@ type State = {
     isLoading: boolean;
     hasError: boolean;
   }
-  auth: {
-    error: string | null,
-    isLoading: boolean
-  }
 }
 
 const initialState: State = {
@@ -25,10 +21,6 @@ const initialState: State = {
     isLoading: true,
     hasError: false,
   },
-  auth: {
-    error: null,
-    isLoading: false
-  }
 };
 
 class Store extends EventBus {

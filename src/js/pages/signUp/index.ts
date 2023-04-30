@@ -129,7 +129,7 @@ export default class SignUpPage extends Block {
           const values = labels.map((label: Label): string[] => {
             const input = label.children.input;
             const {name} = input.props;
-            const {value} = input._element;
+            const {value} = input.element;
             return [name, value];
           });
 

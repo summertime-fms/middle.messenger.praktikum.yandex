@@ -1,4 +1,7 @@
 /* eslint-disable */
+import {SignInData} from "../api/Auth";
+import {UserData} from "../api/User";
+
 export enum FETCH_METHODS {
   POST = 'POST',
   GET = 'GET',
@@ -8,7 +11,7 @@ export enum FETCH_METHODS {
 }
 
 /* eslint-enable */
-type HTTPMethod = (path: string, options?: Options, timeout?: number) => Promise<unknown>
+type HTTPMethod = (path: string, options?: UserData, timeout?: number) => Promise<unknown>
 
 const queryStringify = (data: object): string => {
   if (typeof data !== 'object') {
@@ -44,7 +47,7 @@ export default class HTTPTransport {
     return this.request(url, {...options, method: FETCH_METHODS.GET}, options.timeout);
   }
 
-  post: HTTPMethod = (path: string, data: unknown) => {
+  post: HTTPMethod = (path: string, data: Record<string, any>) => {
     let url = this.url + path;
     return this.request(url, {
       method: FETCH_METHODS.POST,

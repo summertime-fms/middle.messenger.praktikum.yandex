@@ -7,7 +7,6 @@ export enum Routes {
   settings = '/settings',
   error = '/error'
 }
-
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
 }
@@ -21,8 +20,8 @@ function render(query: string, block: Block) {
 
   root.innerHTML = '';
 
-  root.append(block.getContent()!);
-
+  root.appendChild(block.getContent()!);
+// root.insertAdjacentElement('beforeend', block.getContent())
   return root;
 }
 
@@ -45,9 +44,7 @@ class Route {
 
   render() {
     if (!this.block) {
-      this.block = new this.blockClass({});
-
-      render(this.query, this.block);
+      render(this.query, new this.blockClass());
       return;
     }
   }

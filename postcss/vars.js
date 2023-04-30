@@ -1,8 +1,8 @@
 module.exports = {
   black: '#111111',
   white: '#ffffff',
-  accentColor: '#9B3BC9',
-  darkAccentColor: '#8900CA',
+  accentColor: '#339336',
+  darkAccentColor: '#256727',
   bgColor: '#FAFBFC',
   gray: '#ADB3BD',
   gray2: '#CFCFCF',

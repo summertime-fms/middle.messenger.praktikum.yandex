@@ -1,6 +1,8 @@
-.auth {
+.settings {
   @mixin modal;
   @mixin wrapper;
+  background: rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(1px);
 
   form {
     width: 70%;
@@ -8,14 +10,4 @@
     flex-direction: column;
     gap: 15px;
   }
-}
-
-.autocomplete {
-  width: 70%;
-  margin-top: 10px;
-}
-
-.logout {
-  width: 70%;
-  margin-top: 10px;
 }
