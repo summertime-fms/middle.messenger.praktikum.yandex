@@ -55,9 +55,7 @@ export default class SignInPageBase extends Block {
             return [name, value];
           });
 
-
           const signInData = Object.fromEntries(values);
-          console.log(signInData)
           AuthController.signin(signInData);
         }
       },

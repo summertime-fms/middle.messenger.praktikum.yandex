@@ -12,101 +12,6 @@ interface SignUpPageProps {
   title: string
 }
 
-const firstNameLabel = new Label({
-  label: 'First Name',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'text',
-    name: 'first_name',
-    isRequired: true,
-    events: {
-
-    },
-  }),
-});
-
-const secondNameLabel = new Label({
-  label: 'Second Name',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'text',
-    name: 'second_name',
-    isRequired: true,
-    events: {
-
-    },
-  }),
-});
-
-const loginLabel = new Label({
-  label: 'Login',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'text',
-    name: 'login',
-    isRequired: true,
-    events: {
-
-    },
-  }),
-});
-
-const passwordLabel = new Label({
-  label: 'Password',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'password',
-    name: 'password',
-    isRequired: true,
-    events: {
-
-    },
-  }),
-});
-
-const phoneLabel = new Label({
-  label: 'Phone',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'tel',
-    name: 'phone',
-    isRequired: true,
-    events: {
-
-    },
-  }),
-});
-
-const emailLabel = new Label({
-  label: 'Email',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'email',
-    name: 'email',
-    isRequired: true,
-    events: {
-
-    },
-  }),
-});
-
-
-const submitButton: Button = new Button({
-  text: 'Sign up',
-  type: 'submit',
-  events: {},
-  classes: 'button form__button',
-});
-
-const labels: Label[] = [
-  firstNameLabel,
-  secondNameLabel,
-  emailLabel,
-  loginLabel,
-  passwordLabel,
-  phoneLabel,
-];
-
 export default class SignUpPage extends Block {
   constructor(props: SignUpPageProps) {
     super(props);
@@ -122,28 +27,78 @@ export default class SignUpPage extends Block {
     });
 
     this.children.signUpForm = new Form({
-      labels,
-      submitButton,
+      inputs: [
+        new Input({
+          text: 'First Name',
+          error: new ErrorMessage({}),
+          type: 'text',
+          name: 'first_name',
+          isRequired: true,
+          events: {},
+        }),
+        new Input({
+          text: 'Second Name',
+          error: new ErrorMessage({}),
+          type: 'text',
+          name: 'second_name',
+          isRequired: true,
+          events: {},
+        }),
+        new Input({
+          text: 'Login',
+          error: new ErrorMessage({}),
+          type: 'text',
+          name: 'login',
+          isRequired: true,
+          events: {},
+        }),
+          new Input({
+          text: 'Password',
+          error: new ErrorMessage({}),
+          type: 'password',
+          name: 'password',
+          isRequired: true,
+          events: {},
+        }),
+          new Input({
+          text: 'Phone',
+          error: new ErrorMessage({}),
+          type: 'tel',
+          name: 'phone',
+          isRequired: true,
+          events: {},
+        }),
+          new Input({
+          text: 'Email',
+          error: new ErrorMessage({}),
+          type: 'email',
+          name: 'email',
+          isRequired: true,
+          events: {},
+        })
+      ],
+
+      submitButton: new Button({
+        text: 'Sign up',
+        type: 'submit',
+        events: {},
+        classes: 'button form__button',
+      }),
       events: {
         submit() {
-          const values = labels.map((label: Label): string[] => {
-            const input = label.children.input;
-            const {name} = input.props;
-            const {value} = input.element;
+          const values = this.inputs.map((input: Input): string[] => {
+            const {name, value} = input.props;
             return [name, value];
           });
 
 
-          const signInData = Object.fromEntries(values);
-          AuthController.signup(signInData);
+          const signUpData = Object.fromEntries(values);
+          AuthController.signup(signUpData);
         }
       },
     });
   }
 
-  componentDidMount() {
-
-  }
 
   render() {
     return this.compile(template, {...this.props, styles});
