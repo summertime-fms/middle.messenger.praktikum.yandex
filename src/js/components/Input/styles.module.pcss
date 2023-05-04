@@ -1,4 +1,4 @@
-.input:not([type="checkbox"], [type="radio"]) {
+.input {
   height: 30px;
   padding: 0 8px;
   line-height: 30px;
@@ -13,4 +13,40 @@
   &:focus + span {
     transform: scale(0.75) translate(-8px, -35px);
   }
+
+  &:not(:placeholder-shown):not(:focus) + span {
+    transform: scale(0.75) translate(-8px, -35px);
+  }
+
+  &::placeholder {
+    color: transparent;
+  }
 }
+
+.label {
+  width: 100%;
+  display: grid;
+
+  > div span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 8px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: $gray;
+    transition: transform $trans;
+  }
+
+  > div {
+    position: relative;
+  }
+
+  > [data-active] {
+    span {
+      transform: scale(0.75) translate(-8px, -35px);
+    }
+  }
+}
+

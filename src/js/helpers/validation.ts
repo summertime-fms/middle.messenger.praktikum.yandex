@@ -40,13 +40,12 @@ const REGEXPS: Record<string, ValidationHelper> = {
 };
 
 const validateInput = (input: Input): string | boolean => {
-  const inputName = input.element.name;
-  const { value } = input.element;
+  const {name, value} = input.props;
 
-  const key = inputName.toUpperCase();
+  const key = name.toUpperCase();
 
   if (!REGEXPS[key]) {
-    throw new Error(`No associated rule with ${inputName} input`);
+    throw new Error(`No associated rule with ${name} input`);
   }
 
   const { regExp, errorMessage } = REGEXPS[key];
@@ -71,15 +70,11 @@ const renderErrors = (labels: Label[], errors: Errors) => {
   })
 }
 
-export const validateForm = (labels: Label[]): boolean => {
+export const validateForm = (inputs: Input[]): boolean => {
   const errors: Errors = {};
-  const inputs = labels.map((label) => {
-    return label.children.input
-  })
-
 
   inputs.forEach((input) => {
-    const { name } = input._element;
+    const { name } = input.props.name;
     const result: string | boolean = validateInput(input);
     if (typeof result === 'string') {
       errors[name] = result;
@@ -89,7 +84,7 @@ export const validateForm = (labels: Label[]): boolean => {
   let isValid: boolean = Object.values(errors).length === 0;
 
   if (!isValid) {
-    renderErrors(labels, errors)
+    renderErrors(inputs, errors)
   }
 
   return isValid;

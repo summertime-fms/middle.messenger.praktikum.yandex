@@ -9,33 +9,9 @@ import styles from './styles.module.pcss';
 import AuthController from './../../controllers/AuthController';
 import {Link} from '../../components/Link';
 import {withStore} from '../../helpers/Store';
-import authController from "./../../controllers/AuthController";
 interface SignInPageProps {
   title: string
 }
-
-const loginLabel = new Label({
-  label: 'Login',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'text',
-    value: 'test',
-    name: 'login',
-    isRequired: true,
-    events: {},
-  }),
-});
-
-const passwordLabel = new Label({
-  label: 'Password',
-  error: new ErrorMessage({}),
-  input: new Input({
-    type: 'password',
-    name: 'password',
-    isRequired: true,
-    events: {},
-  }),
-});
 
 const submitButton: Button = new Button({
   text: 'Sign in',
@@ -44,11 +20,6 @@ const submitButton: Button = new Button({
   classes: 'button form__button',
 });
 
-
-const labels: Array<Label> = [
-  loginLabel, passwordLabel,
-];
-
 export default class SignInPageBase extends Block {
   constructor(props: SignInPageProps) {
     super(props);
@@ -56,20 +27,37 @@ export default class SignInPageBase extends Block {
 
   init() {
     this.props.title = 'Sign in';
+
     this.children.signInForm = new Form({
-      labels,
+      inputs: [
+        new Input({
+          text: 'Login',
+          error: new ErrorMessage({}),
+          type: 'text',
+          name: 'login',
+          isRequired: true,
+          events: {},
+        }),
+        new Input({
+          text: 'Password',
+          error: new ErrorMessage({}),
+          type: 'password',
+          name: 'password',
+          isRequired: true,
+          events: {},
+        })
+      ],
       submitButton,
       events: {
-        submit: function() {
-          const values = labels.map((label: Label): string[] => {
-            const input = label.children.input;
-            const {name} = input.props;
-            const {value} = input._element;
+        submit: () => {
+          const values = this.inputs.map((input: Input): string[] => {
+            const {name, value} = input.props;
             return [name, value];
           });
 
 
           const signInData = Object.fromEntries(values);
+          console.log(signInData)
           AuthController.signin(signInData);
         }
       },
@@ -111,15 +99,19 @@ export default class SignInPageBase extends Block {
   }
 
   get inputs() {
-    return this.children.signInForm.children.labels.map((label: Label) => label.children.input);
+    return this.children.signInForm.children.inputs;
   }
 
   autoCompleteFields() {
     const loginInput = this.inputs[0];
     const passwordInput = this.inputs[1];
 
-    loginInput.element.value = 'rootroot';
-    passwordInput.element.value = 'RootRoot1'
+    loginInput.setProps({
+      value: 'rootroot'
+    });
+    passwordInput.setProps({
+      value: 'RootRoot1'
+    })
   }
 }
 

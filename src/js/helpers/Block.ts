@@ -16,7 +16,7 @@ export default abstract class Block {
 
   private _element: any = null;
 
-  protected props;
+  props;
 
   private readonly events: Record<string, () => void>;
 

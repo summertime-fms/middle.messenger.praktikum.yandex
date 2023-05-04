@@ -1,14 +1,16 @@
 import Block from '../../helpers/Block';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
+import ErrorMessage from "../ErrorMessage";
 
 interface InputProps {
+  text: string,
   type: string;
   // value: string;
   name: string;
   isRequired: boolean;
   events: Record<string, () => void>;
-  error?: string,
+  error?: ErrorMessage,
   value?: string
 }
 
@@ -44,19 +46,13 @@ export default class Input extends Block {
   }
 
   render() {
-    // this.dispatchComponentDidMount();
     return this.compile(template, {...this.props, styles});
   }
 
   componentDidMount() {
-    // this.element.value = '123';
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    // const oldPropsWithoutValue = delete {...oldProps}.value;
-    // const newPropsWithoutValue = delete {...newProps}.value;
-
-    // const isNeedRerender: boolean = oldPropsWithoutValue !== newPropsWithoutValue;
     const isNeedRerender: boolean = oldProps !== newProps;
 
     if (isNeedRerender) {
