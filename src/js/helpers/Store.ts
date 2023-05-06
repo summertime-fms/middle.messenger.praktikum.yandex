@@ -25,18 +25,15 @@ const initialState: State = {
 
 class Store extends EventBus {
   private state = initialState;
-
   public set(keypath: string, value: unknown) {
     set(this.state, keypath, value);
 
     this.emit(StoreEvents.Updated, this.state);
   }
-
   public getState() {
     return this.state;
   }
 }
-
 const store = new Store();
 
 export const withStore = (mapStateToProps: (state: State) => any) => {

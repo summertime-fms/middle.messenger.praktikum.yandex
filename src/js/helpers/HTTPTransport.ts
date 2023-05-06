@@ -70,9 +70,11 @@ export default class HTTPTransport {
 
   request = (url: string, options: Options, timeout = 5000) => {
     let {method, data, headers = {}} = options;
+    // console.log(data.get('avatar'))
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const isGet = method === FETCH_METHODS.GET;
+      const isFormData = data instanceof FormData;
 
       xhr.open(method!, url);
 
@@ -84,7 +86,6 @@ export default class HTTPTransport {
         resolve(xhr);
       }
 
-      xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.withCredentials = true;
       xhr.responseType = 'json';
 
@@ -95,7 +96,9 @@ export default class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        isFormData
+          ? xhr.send(data)
+          : xhr.send(JSON.stringify(data))
       }
     })
   };

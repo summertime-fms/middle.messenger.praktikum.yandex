@@ -25,14 +25,14 @@ class AuthController  {
             case 401:
               throw new Error('Неверный логин или пароль. Попробуйте ещё раз.')
             case 400:
-              throw new Error('Неверный формат данных.')
+              throw new Error('Пользователь уже в системе.')
             case 500:
               throw new Error('Внутренняя ошибка сервера. Попробуйте позже.')
           }
         }).then( async () => {
           await this.fetchUser();
-          router.go(Routes.chat);
         }).catch(err => {
+          console.error(err)
           store.set('auth.error', err.message);
         }).finally(() => {
           store.set('auth.isLoading', false)
@@ -50,7 +50,7 @@ class AuthController  {
   async fetchUser() {
     store.set('user.isLoading', true)
 
-      await this.api.getUser()
+    await this.api.getUser()
         .then((res: XMLHttpRequest) => {
           const user = res.response;
           store.set('user.data', user)

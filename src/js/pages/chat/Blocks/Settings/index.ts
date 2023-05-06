@@ -4,11 +4,11 @@ import styles from './styles.module.pcss';
 import {withStore} from "../../../../helpers/Store";
 import UserController from "../../../../controllers/UserController";
 import Button from "../../../../components/Button";
-import Label from "../../../../components/Label";
 import Form from "../../../../components/Form";
 import Input from "../../../../components/Input";
 import ErrorMessage from "../../../../components/ErrorMessage";
 import {User} from "../../../../api/User";
+import {UploadAvatar} from "../../../../components/AvatarUpload";
 interface SettingsProps {
   title: string,
   isOpened: boolean,
@@ -27,7 +27,7 @@ export default class SettingsBase extends Block {
   init() {
     this.userData = this.props.data;
 
-    this.inputs = this.createInputs(this.userData);
+    this.inputs = this.createInputs(this.userData!);
 
     this.children.form = new Form({
       submitButton: new Button({
@@ -47,11 +47,11 @@ export default class SettingsBase extends Block {
         }
       }
     });
+    this.children.uploadAvatar = new UploadAvatar({});
   }
 
   getUserData() {
-    const values = this.children.labels.map((label: Label): string[] => {
-      const input = label.children.input;
+    const values = this.inputs.map((input: Input): string[] => {
       const {name, value} = input.props;
       return [name, value];
     });
@@ -60,7 +60,6 @@ export default class SettingsBase extends Block {
   }
 
   createInputs(data: User) {
-    console.log(data)
     const displayName = new Input({
       text: 'Display Name',
       error: new ErrorMessage({}),
@@ -72,6 +71,7 @@ export default class SettingsBase extends Block {
 
       },
     });
+
     const firstName = new Input({
       text: 'First Name',
       error: new ErrorMessage({}),
@@ -82,6 +82,7 @@ export default class SettingsBase extends Block {
       events: {
       },
     });
+
     const secondName = new Input({
       text: 'Second Name',
       error: new ErrorMessage({}),
@@ -93,6 +94,7 @@ export default class SettingsBase extends Block {
 
       },
     });
+
     const email = new Input({
       text: 'Email',
       error: new ErrorMessage({}),
@@ -103,6 +105,7 @@ export default class SettingsBase extends Block {
       events: {
       },
     });
+
     const login = new Input({
       text: 'Login',
       error: new ErrorMessage({}),
@@ -113,17 +116,7 @@ export default class SettingsBase extends Block {
       events: {
       },
     });
-    const password = new Input({
-      text: 'Password',
-      error: new ErrorMessage({}),
-      type: 'password',
-      name: 'password',
-      value: data['password'],
-      isRequired: true,
-      events: {
 
-      },
-    });
     const phone = new Input({
       text: 'Phone',
       error: new ErrorMessage({}),
@@ -142,7 +135,6 @@ export default class SettingsBase extends Block {
       secondName,
       email,
       login,
-      password,
       phone,
     ]
   }
@@ -151,7 +143,6 @@ export default class SettingsBase extends Block {
     return this.compile(template, {...this.props, styles});
   }
 }
-
 
 const withUser = withStore((state) => ({...state.user}));
 const SettingsPage = withUser(SettingsBase);

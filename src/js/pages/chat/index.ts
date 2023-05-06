@@ -8,11 +8,8 @@ import Button from '../../components/Button';
 import Message from '../../components/Message';
 import {SettingsPage} from './Blocks/Settings';
 import Dialog, {DialogProps} from "../../components/Dialog";
-import Form from '../../components/Form';
 import {Link} from "../../components/Link";
-
 import { messagesArr, dialogsData } from '../../helpers/mocks';
-
 import { withStore} from "../../helpers/Store";
 import AuthController from "../../controllers/AuthController";
 
@@ -21,8 +18,7 @@ const dialogs: Dialog[] = dialogsData.map((dialog: DialogProps) => new Dialog(di
 interface ChatPageProps {
   isSettingsOpened?: boolean
 }
-
-export default class ChatPageBase extends Block {
+class ChatPageBase extends Block {
   protected isSettingsOpened: boolean;
 
   constructor(props: ChatPageProps) {
@@ -30,7 +26,7 @@ export default class ChatPageBase extends Block {
     this.isSettingsOpened = false;
   }
 
-    init() {
+  init() {
     this.children.chatsList = new ChatsList({
       dialogs
     });
@@ -69,4 +65,5 @@ export default class ChatPageBase extends Block {
 
 const withUser = withStore((state) => ({ ...state.user }));
 
-export const ChatPage = withUser(ChatPageBase);
+const ChatPage = withUser(ChatPageBase);
+export { ChatPage };

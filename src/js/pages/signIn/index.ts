@@ -9,6 +9,7 @@ import styles from './styles.module.pcss';
 import AuthController from './../../controllers/AuthController';
 import {Link} from '../../components/Link';
 import {withStore} from '../../helpers/Store';
+import {ChatPage} from "../chat";
 interface SignInPageProps {
   title: string
 }

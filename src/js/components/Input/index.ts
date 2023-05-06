@@ -11,8 +11,11 @@ interface InputProps {
   isRequired: boolean;
   events: Record<string, () => void>;
   error?: ErrorMessage,
-  value?: string
+  value?: string | number
+  extraAttrs?: AttributesObject
 }
+
+type AttributesObject = Record<string, string>
 
 export default class Input extends Block {
   constructor(props: InputProps) {
@@ -43,6 +46,21 @@ export default class Input extends Block {
 
     super(props);
     this.dispatchComponentDidMount()
+  }
+
+  init() {
+    if (this.props.extraAttrs && Object.values(this.props.extraAttrs).length) {
+      const stringifiedAttrs = this.parseAttrsToString(this.props.extraAttrs);
+      this.setProps({
+        extraAttrs: stringifiedAttrs
+      })
+    }
+  }
+
+  parseAttrsToString(attrsObject: AttributesObject) {
+    return Object.entries(attrsObject).map(([name, value]) => {
+      return `${name}="${value}"`
+    }).join(' ');
   }
 
   render() {

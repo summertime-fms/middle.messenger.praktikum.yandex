@@ -41,11 +41,18 @@ export class UserAPI extends BaseAPI {
   }
 
   updateData(data: UserData) {
-    return this.http.post('/profile', data);
+    return this.http.post('/profile', {
+      data,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
   }
 
   setUserAvatar(data: FormData) {
-    return this.http.put('/profile/avatar', data);
+    return this.http.put('/profile/avatar', {
+      data
+    });
   }
 
   create = undefined;

@@ -15,6 +15,16 @@ class UserController  {
     return await this.api.setUserAvatar(data)
   }
 
+  uploadAvatar(data: FormData) {
+    this.api.setUserAvatar(data)
+      .then((res: XMLHttpRequest) => {
+        const avatarPath = res.response.avatar;
+        store.set('user.avatar', avatarPath)
+      }).catch((err: Error) => {
+      console.error(err)
+    })
+  }
+
   // async fetchUser() {
   //   store.set('user.isLoading', true)
   //
