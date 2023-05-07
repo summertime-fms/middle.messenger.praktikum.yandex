@@ -58,7 +58,12 @@ class ChatPageBase extends Block {
     this.dispatchComponentDidMount();
   }
 
+  componentDidUpdate(oldProps: any, newProps: any): boolean {
+
+  }
+
   render() {
+    console.log('rendering chat')
     return this.compile(template, {...this.props, styles});
   }
 }

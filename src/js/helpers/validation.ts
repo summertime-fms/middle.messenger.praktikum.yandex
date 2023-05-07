@@ -59,11 +59,10 @@ const validateInput = (input: Input): string | boolean => {
 
 type Errors = Record<string, string>
 
-const renderErrors = (labels: Label[], errors: Errors) => {
+const renderErrors = (inputs: Input[], errors: Errors) => {
   Object.entries(errors).forEach(([key, value]) => {
-    const label: Label = labels.filter((label: Label) => key === label.children.input._element.name)[0];
-    console.log(label)
-    const errorElem = label.children.error;
+    const input: Input = inputs.filter((input: Input) => key === input.props.name)[0];
+    const errorElem = input.children.error;
     errorElem.setProps({
       errorContent: value,
     });
@@ -74,7 +73,7 @@ export const validateForm = (inputs: Input[]): boolean => {
   const errors: Errors = {};
 
   inputs.forEach((input) => {
-    const { name } = input.props.name;
+    const { name } = input.props;
     const result: string | boolean = validateInput(input);
     if (typeof result === 'string') {
       errors[name] = result;

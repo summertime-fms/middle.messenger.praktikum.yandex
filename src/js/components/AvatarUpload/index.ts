@@ -16,6 +16,8 @@ class UploadAvatarBase extends Block {
   }
 
   init() {
+    console.log(this.props)
+
     this.children.uploadInput = new Input({
       text: 'Upload avatar',
       name: 'avatar',
@@ -26,10 +28,10 @@ class UploadAvatarBase extends Block {
         accept: 'image/*',
       },
       events: {
-        change: () => {
+        change: async () => {
           const formData = new FormData();
           formData.append('avatar', this.input.files[0]);
-          userController.uploadAvatar(formData);
+          await userController.uploadAvatar(formData);
         }
       },
     })
@@ -40,15 +42,30 @@ class UploadAvatarBase extends Block {
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    console.log(newProps)
+    console.log(this.props)
+    // const avatarPathname = this.props.pathname;
+
+    // if (avatarPathname) {
+    //   const avatarUrl = `https://ya-praktikum.tech/api/v2/resources/${avatarPathname}`;
+    //   this.setProps({
+    //     avatarUrl
+    //   })
+    // }
+
+    const isNeedRerender: boolean = oldProps !== newProps;
+    if (isNeedRerender) {
+      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    }
   }
 
+
   render() {
+    console.log(1)
     return this.compile(template, {...this.props, styles});
   }
 }
 
-const withUser = withStore((state) => ({ ...state.user }));
+const withUser = withStore((state) => ({ ...state.user.avatar }));
 
 const UploadAvatar = withUser(UploadAvatarBase);
 export { UploadAvatar };

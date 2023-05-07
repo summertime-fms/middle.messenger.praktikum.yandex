@@ -2,6 +2,7 @@ import Block from '../../helpers/Block';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
 import ErrorMessage from "../ErrorMessage";
+import {log} from "util";
 
 interface InputProps {
   text: string,
@@ -22,9 +23,9 @@ export default class Input extends Block {
     const externalChange = props.events?.change;
 
     const internalInput = () => {
-      if (['text', 'number', 'tel', 'email'].includes(this.props.name)) {
+      if (['text', 'number', 'tel', 'email', 'password'].includes(this.props.type)) {
         this.setProps({
-          value: this.element.value
+          value: this.inputElement.value
         })
       }
     }
@@ -71,16 +72,14 @@ export default class Input extends Block {
   }
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
-    const isNeedRerender: boolean = oldProps !== newProps;
 
-    if (isNeedRerender) {
-      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-    }
-
-    return isNeedRerender;
   }
 
   get name() {
     return this.props.name
+  }
+
+  get inputElement() {
+    return this.element.querySelector('input');
   }
 }

@@ -31,6 +31,7 @@ class AuthController  {
           }
         }).then( async () => {
           await this.fetchUser();
+          router.go(Routes.chat)
         }).catch(err => {
           console.error(err)
           store.set('auth.error', err.message);

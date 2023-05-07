@@ -12,6 +12,7 @@ type State = {
     data: null | User;
     isLoading: boolean;
     hasError: boolean;
+    avatar?: Record<string, string>
   }
 }
 
@@ -20,6 +21,9 @@ const initialState: State = {
     data: null,
     isLoading: true,
     hasError: false,
+    avatar: {
+      pathname: ''
+    }
   },
 };
 

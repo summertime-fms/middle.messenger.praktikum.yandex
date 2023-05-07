@@ -11,3 +11,19 @@
     gap: 15px;
   }
 }
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  color: $black;
+  transition: color $trans;
+
+  &:hover {
+    color: $accentColor;
+  }
+}

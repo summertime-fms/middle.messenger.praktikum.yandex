@@ -139,6 +139,10 @@ export default class SettingsBase extends Block {
     ]
   }
 
+   componentDidUpdate(oldProps: any, newProps: any): boolean {
+     return true;
+   }
+
   render() {
     return this.compile(template, {...this.props, styles});
   }

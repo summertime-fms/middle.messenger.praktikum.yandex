@@ -51,7 +51,10 @@ export class UserAPI extends BaseAPI {
 
   setUserAvatar(data: FormData) {
     return this.http.put('/profile/avatar', {
-      data
+      data,
+      // headers: {
+      //   'Content-type': 'multipart/form-data'
+      // }
     });
   }
 

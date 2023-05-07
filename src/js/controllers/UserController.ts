@@ -18,26 +18,12 @@ class UserController  {
   uploadAvatar(data: FormData) {
     this.api.setUserAvatar(data)
       .then((res: XMLHttpRequest) => {
-        const avatarPath = res.response.avatar;
-        store.set('user.avatar', avatarPath)
+        const avatarPath = `https://ya-praktikum.tech/api/v2/resources/${res.response.avatar}`;
+        store.set('user.avatar.pathname', avatarPath)
       }).catch((err: Error) => {
       console.error(err)
     })
   }
-
-  // async fetchUser() {
-  //   store.set('user.isLoading', true)
-  //
-  //   await this.api.getUser()
-  //     .then((res: XMLHttpRequest) => {
-  //       const user = res.response;
-  //       store.set('user.data', user)
-  //     }).catch(err => {
-  //       store.set('user.error', err)
-  //     }).finally(() => {
-  //       store.set('user.isLoading', false)
-  //     })
-  // }
 }
 
 export default new UserController();

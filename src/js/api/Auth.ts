@@ -32,19 +32,32 @@ export class AuthAPI extends BaseAPI {
   }
 
   signup(data: SignUpData) {
-    return this.http.post('/signup', data);
+    return this.http.post('/signup', {data});
   }
 
   signin(data: SignInData) {
-    return this.http.post('/signin', data);
+    return this.http.post('/signin', {
+      data,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
   }
 
   logout() {
-    return this.http.post('/logout');
+    return this.http.post('/logout', {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
   }
 
   getUser() {
-    return this.http.get('/user');
+    return this.http.get('/user', {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
   }
 
   create = undefined;
