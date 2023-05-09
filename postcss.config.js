@@ -5,7 +5,7 @@ module.exports = {
     require('postcss-mixins')({
       mixinsDir: './postcss/mixins'
     }),
-    require('postcss-nested'),
+    require('postcss-nesting'),
     require('postcss-simple-vars')({ variables })
   ]
 }

@@ -54,7 +54,9 @@ class AuthController  {
     await this.api.getUser()
         .then((res: XMLHttpRequest) => {
           const user = res.response;
+          const avatarPath = `https://ya-praktikum.tech/api/v2/resources/${res.response.avatar}`;
           store.set('user.data', user)
+          store.set('user.avatar.pathname', avatarPath)
         }).catch(err => {
           store.set('user.error', err)
       }).finally(() => {

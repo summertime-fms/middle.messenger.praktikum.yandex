@@ -6,7 +6,9 @@ import ChatsList from './Blocks/ChatsList';
 import ChatWindow from './Blocks/ChatWindow';
 import Button from '../../components/Button';
 import Message from '../../components/Message';
-import {SettingsPage} from './Blocks/Settings';
+import {Settings} from './Blocks/Settings';
+import settingsTemplate from './Blocks/Settings/template.hbs';
+import Modal from './../../components/Modal';
 import Dialog, {DialogProps} from "../../components/Dialog";
 import {Link} from "../../components/Link";
 import { messagesArr, dialogsData } from '../../helpers/mocks';
@@ -35,14 +37,20 @@ class ChatPageBase extends Block {
       messages,
     });
 
-    this.children.settingsModal = new SettingsPage({});
+    this.children.settingsModal = new Modal({
+      innerComponent: Settings,
+      contentTemplate: settingsTemplate,
+      isOpened: false
+    });
 
     this.children.settingsButton = new Button({
       text: 'Settings',
       type: 'button',
       events: {
         click: () => {
-          this.children.settingsModal._show();
+          this.children.settingsModal.setProps({
+            isOpened: true
+          });
         },
       },
     });

@@ -11,10 +11,6 @@ class UserController  {
     return await this.api.updateData(data)
   }
 
-  async setAvatar(data: FormData) {
-    return await this.api.setUserAvatar(data)
-  }
-
   uploadAvatar(data: FormData) {
     this.api.setUserAvatar(data)
       .then((res: XMLHttpRequest) => {

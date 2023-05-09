@@ -1,5 +1,4 @@
 import Block from '../../helpers/Block';
-import Label from '../../components/Label';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
 import Form from '../../components/Form';

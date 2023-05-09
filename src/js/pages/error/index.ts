@@ -10,7 +10,7 @@ export default class ErrorPage extends Block {
   }
 
   init() {
-    this.props.errorMessage = 'Error message will be here';
+    this.props.errorMessage = 'error message will be here';
   }
 
   componentDidMount() {

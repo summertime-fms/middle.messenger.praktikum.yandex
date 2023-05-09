@@ -72,3 +72,9 @@ export const isEqual = (x: any, y: any): boolean => {
   else
     return false;
 }
+
+type propsObject = Record<string, unknown>;
+
+export const getChangedProps = (a: propsObject, b: propsObject) => {
+  return Object.keys(a).filter((key: string) =>  a[key] === b[key]);
+}

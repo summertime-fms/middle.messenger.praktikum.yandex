@@ -5,7 +5,7 @@ import ErrorMessage from "../ErrorMessage";
 import {log} from "util";
 
 interface InputProps {
-  text: string,
+  text?: string,
   type: string;
   // value: string;
   name: string;
@@ -14,11 +14,13 @@ interface InputProps {
   error?: ErrorMessage,
   value?: string | number
   extraAttrs?: AttributesObject
+  classes?: string[]
 }
 
 type AttributesObject = Record<string, string>
 
 export default class Input extends Block {
+  classesStr: string;
   constructor(props: InputProps) {
     const externalChange = props.events?.change;
 
@@ -55,6 +57,10 @@ export default class Input extends Block {
       this.setProps({
         extraAttrs: stringifiedAttrs
       })
+    }
+
+    if (this.props.classes) {
+      this.props.classes = this.props.classes.join(' ');
     }
   }
 

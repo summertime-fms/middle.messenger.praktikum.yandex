@@ -1,6 +1,5 @@
 import Block from '../../helpers/Block';
 import Form from '../../components/Form';
-import Label from '../../components/Label';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -9,7 +8,6 @@ import styles from './styles.module.pcss';
 import AuthController from './../../controllers/AuthController';
 import {Link} from '../../components/Link';
 import {withStore} from '../../helpers/Store';
-import {ChatPage} from "../chat";
 interface SignInPageProps {
   title: string
 }

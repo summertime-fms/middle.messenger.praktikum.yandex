@@ -149,5 +149,5 @@ export default class SettingsBase extends Block {
 }
 
 const withUser = withStore((state) => ({...state.user}));
-const SettingsPage = withUser(SettingsBase);
-export {SettingsPage};
+const Settings = withUser(SettingsBase);
+export {Settings};

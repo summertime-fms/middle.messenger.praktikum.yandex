@@ -3,16 +3,28 @@
     inset: 0;
     display: grid;
     place-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.15);
+    transition: transform $trans, opacity $trans;
+    background-color: rgba(0, 0, 0, 0.25);
+}
 
-  > div {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: $white;
-    box-shadow: $shadow;
-    border-radius: 20px;
-    padding: 30px;
-    width: 480px;
-  }
+@define-mixin modal-active {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: all;
+}
+
+@define-mixin modal-inner {
+  position: relative;
+  display: flex;
+  z-index: 2;
+  flex-direction: column;
+  align-items: center;
+  background-color: $white;
+  box-shadow: $shadow;
+  border-radius: 20px;
+  padding: 30px;
+  width: 480px;
 }

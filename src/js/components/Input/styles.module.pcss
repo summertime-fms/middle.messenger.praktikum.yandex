@@ -27,26 +27,26 @@
   width: 100%;
   display: grid;
 
-  > div span {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 8px;
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 13px;
-    color: $gray;
-    transition: transform $trans;
-  }
 
-  > div {
+  & > div {
     position: relative;
   }
 
-  > [data-active] {
-    span {
+  & > [data-active] {
+    & span {
       transform: scale(0.75) translate(-8px, -35px);
     }
   }
 }
 
+.labelText {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 8px;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: $gray;
+  transition: transform $trans;
+}
