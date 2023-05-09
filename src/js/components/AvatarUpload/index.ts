@@ -39,10 +39,6 @@ class UploadAvatarBase extends Block {
     return this.children.uploadInput.element.querySelector('[type="file"]');
   }
 
-  // componentDidUpdate(oldProps: any, newProps: any): boolean {
-  //   return false;
-  // }
-
   render() {
     return this.compile(template, {...this.props, styles});
   }
