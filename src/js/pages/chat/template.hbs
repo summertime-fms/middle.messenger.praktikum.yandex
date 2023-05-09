@@ -2,14 +2,18 @@
   <div class="{{styles.chat}}">
     <div class="{{styles.chat__left}}">
       <header class="{{styles.chats__header}}">
-        <div class="{{styles.avatar}}">
-          <img src="{{avatar.pathname}}" alt="avatar">
+        <div class="{{styles.left}}">
+          <div class="{{styles.avatar}}">
+            <img src="{{avatar.pathname}}" alt="avatar">
+          </div>
+
+          <span class="{{styles.userName}}">{{data.display_name}}</span>
         </div>
 
-        <span class="{{styles.userName}}">{{data.display_name}}</span>
-
-        {{{settingsButton}}}
-        {{{logoutLink}}}
+        <div class="{{styles.right}}">
+          {{{settingsButton}}}
+          {{{logoutLink}}}
+        </div>
       </header>
 
 

@@ -3,7 +3,7 @@ import template from './template.hbs';
 import styles from './styles.module.pcss';
 import {getChangedProps} from "../../helpers/utils";
 import Button from "../Button";
-import {customAlphabet} from "nanoid";
+import closeIcon from './../../../img/sprite/close.svg';
 export interface ModalProps {
   innerComponent: typeof Block;
   contentTemplate: typeof template;
@@ -18,8 +18,13 @@ export default class Modal extends Block {
   init() {
     this.children.content = new this.props.innerComponent();
     this.children.closeButton = new Button({
-      action: 'close',
+      text: 'Close',
       type: 'button',
+      icon: {
+        width: 14,
+        height: 14,
+        hash: closeIcon
+      },
       events: {
         click: () => {
           this.setProps({

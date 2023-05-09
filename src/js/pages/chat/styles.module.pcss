@@ -59,7 +59,7 @@
 
 .chat__right-header {
   border-bottom: 1px solid #cfcfcf;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 15px;
   height: 80px;
@@ -190,4 +190,18 @@
 
 .userName {
   color: $black;
+}
+
+.left, .right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.settingsIcon {
+  transition: color $trans;
+
+  &:hover {
+    color: $accentColor;
+  }
 }

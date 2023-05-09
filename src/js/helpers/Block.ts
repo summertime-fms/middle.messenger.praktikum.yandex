@@ -183,7 +183,7 @@ export default abstract class Block {
       get(target, prop: string) {
         const value = target[prop as keyof Object];
 
-        if (value && value.toString().startsWith('_')) {
+        if (value && value.toString().startsWith('_') && prop !== 'classes') { //костыль связанный с тем как postcss генерит префиксы для классов
           throw new Error('Нет прав');
         }
 

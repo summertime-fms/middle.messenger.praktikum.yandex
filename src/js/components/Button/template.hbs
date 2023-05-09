@@ -1,0 +1,12 @@
+{{#if icon}}
+  <button class="{{styles.icon}} {{classes}}" type="{{type}}" title="{{text}}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{icon.width}}" height="{{icon.height}}" viewBox="0 0 {{icon.width}} {{icon.height}}" fill="none">
+      <use href="{{icon.hash}}"></use>
+    </svg>
+  </button>
+
+{{else}}
+  <button type="{{type}}" class="{{ styles.button }} {{classes}}">
+    {{text}}
+  </button>
+{{/if}}

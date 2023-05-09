@@ -1,7 +1,6 @@
 import Block from '../../helpers/Block';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
-
 import ChatsList from './Blocks/ChatsList';
 import ChatWindow from './Blocks/ChatWindow';
 import Button from '../../components/Button';
@@ -18,8 +17,8 @@ import AuthController from "../../controllers/AuthController";
 const messages: Message[] = messagesArr.map((message) => new Message(message));
 const dialogs: Dialog[] = dialogsData.map((dialog: DialogProps) => new Dialog(dialog));
 import logoutIcon from './../../../img/sprite/logout.svg';
+import settingsIcon from './../../../img/sprite/settings.svg';
 
-console.log(logoutIcon)
 interface ChatPageProps {
   isSettingsOpened?: boolean
 }
@@ -49,6 +48,12 @@ class ChatPageBase extends Block {
     this.children.settingsButton = new Button({
       text: 'Settings',
       type: 'button',
+      icon: {
+        width: 25,
+        height: 25,
+        hash: settingsIcon
+      },
+      classes: styles.settingsIcon,
       events: {
         click: () => {
           this.children.settingsModal.setProps({
