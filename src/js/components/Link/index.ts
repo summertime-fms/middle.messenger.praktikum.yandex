@@ -6,7 +6,12 @@ interface LinkProps {
   text: string;
   class: string,
   to: string,
-  events?: Record<string, () => void>
+  events?: Record<string, () => void>,
+  icon?: {
+    width: number,
+    height: number,
+    hash: string
+  }
 }
 export default class BaseLink extends Block {
   constructor(props: LinkProps) {
@@ -24,7 +29,6 @@ export default class BaseLink extends Block {
       },
     });
   }
-
   navigate() {
     this.props.router.go(this.props.to);
   }

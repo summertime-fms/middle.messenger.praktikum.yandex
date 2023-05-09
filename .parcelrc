@@ -3,6 +3,11 @@
     "transformers": {
         "*.hbs": [
             "@anikin/parcel-transformer-handlebars-precompile"
-        ]
+        ],
+        "*.svg": ["parcel-transformer-svg-sprite"]
+    },
+    "packagers": {
+      "*.html": "parcel-packager-svg-sprite"
     }
+
 }

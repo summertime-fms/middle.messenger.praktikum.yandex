@@ -17,6 +17,9 @@ import AuthController from "../../controllers/AuthController";
 
 const messages: Message[] = messagesArr.map((message) => new Message(message));
 const dialogs: Dialog[] = dialogsData.map((dialog: DialogProps) => new Dialog(dialog));
+import logoutIcon from './../../../img/sprite/logout.svg';
+
+console.log(logoutIcon)
 interface ChatPageProps {
   isSettingsOpened?: boolean
 }
@@ -57,6 +60,11 @@ class ChatPageBase extends Block {
 
     this.children.logoutLink = new Link({
       text: 'Logout',
+      icon: {
+        width: 25,
+        height: 25,
+        hash: logoutIcon
+      },
       events: {
         click() {
           AuthController.logout()
@@ -71,8 +79,7 @@ class ChatPageBase extends Block {
   }
 
   render() {
-    console.log('rendering chat')
-    return this.compile(template, {...this.props, styles});
+    return this.compile(template, {...this.props, styles, icons: {logoutIcon}});
   }
 }
 
