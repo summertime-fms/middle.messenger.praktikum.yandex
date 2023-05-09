@@ -1,5 +1,4 @@
 import Input from '../components/Input';
-import Label from '../components/Label';
 
 interface ValidationHelper {
   regExp: RegExp,
@@ -37,9 +36,14 @@ const REGEXPS: Record<string, ValidationHelper> = {
     regExp: /^./,
     errorMessage: 'Нельзя отправить пустое сообщение',
   },
+  DISPLAY_NAME: {
+    regExp: /^./,
+    errorMessage: 'Поле обязательно к заполнению',
+  }
 };
 
 const validateInput = (input: Input): string | boolean => {
+  console.log(input)
   const {name, value} = input.props;
 
   const key = name.toUpperCase();
@@ -50,7 +54,11 @@ const validateInput = (input: Input): string | boolean => {
 
   const { regExp, errorMessage } = REGEXPS[key];
 
-  if (regExp.test(value) || !value.length) {
+  if (!value) {
+    return 'Поле обязательно к заполнению';
+  }
+
+  if (regExp.test(value)) {
     return true;
   }
 

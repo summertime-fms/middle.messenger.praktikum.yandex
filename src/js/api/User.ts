@@ -41,7 +41,7 @@ export class UserAPI extends BaseAPI {
   }
 
   updateData(data: UserData) {
-    return this.http.post('/profile', {
+    return this.http.put('/profile', {
       data,
       headers: {
         'Content-type': 'application/json'

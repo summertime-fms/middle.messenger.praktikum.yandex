@@ -19,7 +19,7 @@ export default class Form extends Block {
 
     const internalSubmit = (evt: any) => {
       evt.preventDefault();
-      this.isValid = validateForm(this.children.inputs);
+      this.isValid = validateForm(this.inputsToValidate);
 
       if (externalSubmit && this.isValid) {
         externalSubmit();
@@ -28,6 +28,10 @@ export default class Form extends Block {
 
     props.events.submit = internalSubmit;
     super(props);
+  }
+
+  get inputsToValidate() {
+    return this.children.inputs.filter((input: Input) => !input.props.noValidate);
   }
 
   render() {

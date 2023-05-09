@@ -32,7 +32,6 @@ export default class Button extends Block {
   }
 
   render() {
-    console.log(this.template)
     return this.compile(this.template, {...this.props, styles});
   }
 }

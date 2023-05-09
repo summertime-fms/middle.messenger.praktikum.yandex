@@ -38,12 +38,9 @@ export default class SettingsBase extends Block {
 
       inputs: this.inputs,
       events: {
-        submit() {
+        submit: () => {
           const data = this.getUserData();
-          UserController.update(data)
-            .then((response: XMLHttpRequest) => {
-              console.log(response)
-            })
+          UserController.update(data);
         }
       }
     });
@@ -66,7 +63,7 @@ export default class SettingsBase extends Block {
       type: 'text',
       value: data['display_name'],
       name: 'display_name',
-      isRequired: true,
+      isRequired: false,
       events: {
 
       },

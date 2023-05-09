@@ -2,7 +2,6 @@ import Block from '../../helpers/Block';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
 import ErrorMessage from "../ErrorMessage";
-import {log} from "util";
 
 interface InputProps {
   text?: string,
@@ -14,7 +13,8 @@ interface InputProps {
   error?: ErrorMessage,
   value?: string | number
   extraAttrs?: AttributesObject
-  classes?: string[]
+  classes?: string[],
+  noValidate?: boolean
 }
 
 type AttributesObject = Record<string, string>
@@ -62,6 +62,8 @@ export default class Input extends Block {
     if (this.props.classes) {
       this.props.classes = this.props.classes.join(' ');
     }
+
+    this.props.isRequired = this.props.isRequired ? 'required' : '';
   }
 
   parseAttrsToString(attrsObject: AttributesObject) {
@@ -73,12 +75,8 @@ export default class Input extends Block {
   render() {
     return this.compile(template, {...this.props, styles});
   }
-
-  componentDidMount() {
-  }
-
-  componentDidUpdate(oldProps: any, newProps: any): boolean {
-
+  componentDidUpdate(): boolean {
+    return false;
   }
 
   get name() {
