@@ -198,10 +198,12 @@
   gap: 15px;
 }
 
-.settingsIcon {
-  transition: color $trans;
+.right {
+  & > * {
+    transition: color $trans;
 
-  &:hover {
-    color: $accentColor;
+    &:hover {
+      color: $accentColor;
+    }
   }
 }

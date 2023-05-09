@@ -6,8 +6,8 @@ import Button from "../Button";
 import closeIcon from './../../../img/sprite/close.svg';
 export interface ModalProps {
   innerComponent: typeof Block;
-  contentTemplate: typeof template;
   isOpened: boolean
+  title?: string
 }
 
 export default class Modal extends Block {

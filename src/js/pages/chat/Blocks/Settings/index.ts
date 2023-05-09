@@ -10,7 +10,6 @@ import ErrorMessage from "../../../../components/ErrorMessage";
 import {User} from "../../../../api/User";
 import {UploadAvatar} from "../../../../components/AvatarUpload";
 interface SettingsProps {
-  title: string,
   isOpened: boolean,
   activeClass?: string,
   userData: User | null,

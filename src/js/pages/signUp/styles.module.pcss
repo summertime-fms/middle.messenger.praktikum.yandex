@@ -1,6 +1,9 @@
 .auth {
-  @mixin modal;
   @mixin wrapper;
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
 
   & form {
     width: 70%;
@@ -10,7 +13,15 @@
   }
 }
 
-.autocomplete {
-  width: 70%;
-  margin-top: 10px;
+.authInner {
+  position: relative;
+  display: flex;
+  z-index: 2;
+  flex-direction: column;
+  align-items: center;
+  background-color: $white;
+  box-shadow: $shadow;
+  border-radius: 20px;
+  padding: 30px;
+  width: 480px;
 }

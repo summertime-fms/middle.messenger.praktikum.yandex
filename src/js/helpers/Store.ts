@@ -12,7 +12,8 @@ type State = {
     data: null | User;
     isLoading: boolean;
     hasError: boolean;
-    avatar?: Record<string, string>
+    avatar?: Record<string, string>,
+    passwordError?: string
   }
 }
 

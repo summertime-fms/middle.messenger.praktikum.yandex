@@ -52,10 +52,16 @@ export class UserAPI extends BaseAPI {
   setUserAvatar(data: FormData) {
     return this.http.put('/profile/avatar', {
       data,
-      // headers: {
-      //   'Content-type': 'multipart/form-data'
-      // }
     });
+  }
+
+  updatePassword(data: Record<string, any>) {
+    return this.http.put('/password', {
+      data,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
   }
 
   create = undefined;

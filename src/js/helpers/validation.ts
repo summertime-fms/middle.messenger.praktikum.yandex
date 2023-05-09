@@ -39,6 +39,25 @@ const REGEXPS: Record<string, ValidationHelper> = {
   DISPLAY_NAME: {
     regExp: /^./,
     errorMessage: 'Поле обязательно к заполнению',
+  },
+  OLDPASSWORD: {
+    /* eslint-disable */
+    regExp: /[A-ZА-Я][a-zа-я\-]*/,
+    /* eslint-enable */
+    errorMessage: 'Длина пароля должна быть от 8 до 40 символов. Пароль должен содержать хотя бы одну заглавную букву и одну цифру.',
+  },
+  NEWPASSWORD: {
+    /* eslint-disable */
+    regExp: /[A-ZА-Я][a-zа-я\-]*/,
+    /* eslint-enable */
+    errorMessage: 'Длина пароля должна быть от 8 до 40 символов. Пароль должен содержать хотя бы одну заглавную букву и одну цифру.',
+  },
+  REPEAT_PASSWORD: {
+    /* eslint-disable */
+    regExp: /[A-ZА-Я][a-zа-я\-]*/,
+    /* eslint-enable */
+    errorMessage: 'Длина пароля должна быть от 8 до 40 символов. Пароль должен содержать хотя бы одну заглавную букву и одну цифру.',
+
   }
 };
 
