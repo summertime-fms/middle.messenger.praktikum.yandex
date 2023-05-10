@@ -55,6 +55,14 @@ export default class PasswordSettingsBase extends Block {
       ],
       events: {
         submit: () => {
+          const isPasswordsAreSimilar = this.compareNewPassword();
+          if (!isPasswordsAreSimilar) {
+            this.getInputs('repeat_password').children.error.setProps({
+              errorContent: 'Пароли не совпадают. Попробуйте ещё раз.'
+            });
+
+            return;
+          }
           const data = this.getValues();
           UserController.updateUserPassword(data);
         }
@@ -63,7 +71,7 @@ export default class PasswordSettingsBase extends Block {
   }
 
   getValues() {
-    const neededInputs = this.inputs.filter((input: Input) => ['oldPassword', 'newPassword'].includes(input.props.name));
+    const neededInputs = this.getInputs().filter((input: Input) => ['oldPassword', 'newPassword'].includes(input.props.name));
 
     const values = neededInputs.map((input: Input): string[] => {
       const {name, value} = input.props;
@@ -73,7 +81,20 @@ export default class PasswordSettingsBase extends Block {
     return Object.fromEntries(values);
   }
 
-  get inputs() {
+  compareNewPassword() {
+    const newPasswordInputs = this.getInputs(['newPassword', 'repeat_password']);
+    return newPasswordInputs[0].props.value === newPasswordInputs[1].props.value;
+  }
+
+   getInputs(inputsNames?: string[] | string) {
+    if (Array.isArray(inputsNames)) {
+      return this.children.form.children.inputs.filter((input: Input) => inputsNames.includes(input.props.name));
+    }
+
+    if (typeof inputsNames === 'string') {
+      return this.children.form.children.inputs.filter((input: Input) => input.props.name === inputsNames)[0];
+    }
+
     return this.children.form.children.inputs;
   }
 
