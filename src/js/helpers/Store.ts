@@ -14,6 +14,10 @@ type State = {
     hasError: boolean;
     avatar?: Record<string, string>,
     passwordError?: string
+  },
+  auth?: {
+    signUpError?: string,
+    signInError?: string
   }
 }
 
@@ -21,11 +25,8 @@ const initialState: State = {
   user: {
     data: null,
     isLoading: true,
-    hasError: false,
-    avatar: {
-      pathname: ''
-    }
-  },
+    hasError: false
+  }
 };
 
 class Store extends EventBus {

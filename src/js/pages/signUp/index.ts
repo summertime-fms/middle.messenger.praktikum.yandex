@@ -7,11 +7,12 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import AuthController from "../../controllers/AuthController";
 import {Link} from "../../components/Link";
+import {withStore} from "../../helpers/Store";
 interface SignUpPageProps {
   title: string
 }
 
-export default class SignUpPage extends Block {
+export default class SignUpPageBase extends Block {
   constructor(props: SignUpPageProps) {
     super(props);
   }
@@ -84,7 +85,8 @@ export default class SignUpPage extends Block {
         classes: 'button form__button',
       }),
       events: {
-        submit() {
+        submit: () => {
+          console.log(this)
           const values = this.inputs.map((input: Input): string[] => {
             const {name, value} = input.props;
             return [name, value];
@@ -92,10 +94,14 @@ export default class SignUpPage extends Block {
 
 
           const signUpData = Object.fromEntries(values);
+          console.log(signUpData)
           AuthController.signup(signUpData);
         }
       },
     });
+  }
+  get inputs() {
+    return this.children.signUpForm.children.inputs;
   }
 
 
@@ -103,3 +109,8 @@ export default class SignUpPage extends Block {
     return this.compile(template, {...this.props, styles});
   }
 }
+
+const withStoreWrapper = withStore((state) => ({...state.auth}));
+const signUpPage = withStoreWrapper(SignUpPageBase);
+export {signUpPage}
+

@@ -40,6 +40,8 @@ export default class Modal extends Block {
     if (changedProps.includes('isOpened')) {
       this.element.classList.toggle(`${styles['is-active']}`);
     }
+
+    return false;
   }
 
   render() {

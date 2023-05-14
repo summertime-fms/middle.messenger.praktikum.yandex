@@ -62,7 +62,6 @@ const REGEXPS: Record<string, ValidationHelper> = {
 };
 
 const validateInput = (input: Input): string | boolean => {
-  console.log(input)
   const {name, value} = input.props;
 
   const key = name.toUpperCase();

@@ -1,6 +1,6 @@
 import router, {Routes} from './js/helpers/Router';
 import {signInPage} from './js/pages/signIn';
-import signUpPage from './js/pages/signUp';
+import {signUpPage} from './js/pages/signUp';
 import {ChatPage} from './js/pages/chat';
 import AuthController from "./js/controllers/AuthController";
 

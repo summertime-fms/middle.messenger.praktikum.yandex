@@ -62,6 +62,10 @@ export default class PasswordSettingsBase extends Block {
             });
 
             return;
+          } else {
+            this.getInputs('repeat_password').children.error.setProps({
+              errorContent: ''
+            });
           }
           const data = this.getValues();
           UserController.updateUserPassword(data);

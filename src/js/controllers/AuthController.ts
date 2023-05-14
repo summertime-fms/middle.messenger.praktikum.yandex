@@ -10,11 +10,18 @@ class AuthController  {
 
   signup(data: SignUpData) {
     this.api.signup(data)
-      .then(async () => {
-        await this.fetchUser();
-        router.go(Routes.chat);
+      .then((res: XMLHttpRequest) => {
+        if (res.status >= 400) {
+          throw new Error(res.response.reason)
+        }
+      }).then(async () => {
+      await this.fetchUser();
+      router.go(Routes.chat)
       })
-      .catch(console.log);
+      .catch((err: Error) => {
+        console.error(err)
+        store.set('auth.signUpError', err.message)
+      });
   }
 
   async signin(data: SignInData) {
@@ -34,7 +41,7 @@ class AuthController  {
           router.go(Routes.chat)
         }).catch(err => {
           console.error(err)
-          store.set('auth.error', err.message);
+          store.set('auth.signInError', err.message);
         }).finally(() => {
           store.set('auth.isLoading', false)
         });
@@ -54,9 +61,13 @@ class AuthController  {
     await this.api.getUser()
         .then((res: XMLHttpRequest) => {
           const user = res.response;
-          const avatarPath = `https://ya-praktikum.tech/api/v2/resources/${res.response.avatar}`;
+          const {avatar} = user;
+
+          if (avatar) {
+            const avatarPath = `https://ya-praktikum.tech/api/v2/resources/${avatar}`;
+            store.set('user.avatar.pathname', avatarPath)
+          }
           store.set('user.data', user)
-          store.set('user.avatar.pathname', avatarPath)
         }).catch(err => {
           store.set('user.error', err)
       }).finally(() => {

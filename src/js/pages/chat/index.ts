@@ -1,7 +1,7 @@
 import Block from '../../helpers/Block';
 import template from './template.hbs';
 import styles from './styles.module.pcss';
-import { withStore} from "../../helpers/Store";
+import {withStore} from "../../helpers/Store";
 import AuthController from "../../controllers/AuthController";
 
 //chat-comps
@@ -27,7 +27,9 @@ const messages: Message[] = messagesArr.map((message) => new Message(message));
 const dialogs: Dialog[] = dialogsData.map((dialog: DialogProps) => new Dialog(dialog));
 
 interface ChatPageProps {
-  isSettingsOpened?: boolean
+  isSettingsOpened?: boolean;
+  visibleName: string;
+  letter: string
 }
 class ChatPageBase extends Block {
   protected isSettingsOpened: boolean;
@@ -74,6 +76,7 @@ class ChatPageBase extends Block {
         },
       },
     });
+
     this.children.passwordButton = new Button({
       text: 'Password',
       icon: {
@@ -104,11 +107,18 @@ class ChatPageBase extends Block {
         }
       }
     });
+
+    this.setProps({
+      letter: (this.props.data.display_name || this.props.data.first_name).split('')[0].toUpperCase(),
+      currentName: this.props.data.display_name || this.props.data.first_name
+    })
+
+
     this.dispatchComponentDidMount();
   }
 
-  componentDidUpdate(oldProps: any, newProps: any): boolean {
-
+  componentDidUpdate(): boolean {
+    return false;
   }
 
   render() {

@@ -24,7 +24,7 @@ type Options = {
 }
 
 export default class HTTPTransport {
-  private url: string;
+  private readonly url: string;
   static BASE_API_URL = 'https://ya-praktikum.tech/api/v2';
 
   constructor(endpoint: string) {
@@ -39,7 +39,7 @@ export default class HTTPTransport {
       url = url + queryStringify(data);
     }
 
-    return this.request(url, {...options, method: FETCH_METHODS.GET}, options.timeout);
+    return this.request(url, {...options, method: FETCH_METHODS.GET});
   }
 
   post: HTTPMethod = (path: string, options: Options) => {
@@ -54,16 +54,16 @@ export default class HTTPTransport {
     let url = this.url + path;
 
     return this.request(url,
-      {...options, method: FETCH_METHODS.PUT}, options.timeout);
+      {...options, method: FETCH_METHODS.PUT});
   };
 
   delete: HTTPMethod = (path: string, options: Options) => {
     let url = this.url + path;
 
-    return this.request(url, {...options, method: FETCH_METHODS.DELETE}, options.timeout);
+    return this.request(url, {...options, method: FETCH_METHODS.DELETE});
   };
 
-  request = (url: string, options: Options, timeout = 5000) => {
+  request = (url: string, options: Options) => {
     let {method, data, headers = {}} = options;
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -90,9 +90,12 @@ export default class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        isFormData
-          ? xhr.send(data)
-          : xhr.send(JSON.stringify(data))
+        if(isFormData) {
+          xhr.send(data)
+        } else {
+          console.log(data)
+          xhr.send(JSON.stringify(data))
+        }
       }
     })
   };

@@ -3,11 +3,16 @@
     <div class="{{styles.chat__left}}">
       <header class="{{styles.chats__header}}">
         <div class="{{styles.left}}">
+
           <div class="{{styles.avatar}}">
-            <img src="{{avatar.pathname}}" alt="avatar">
+            {{#if avatar.pathname}}
+              <img src="{{avatar.pathname}}" alt="avatar">
+            {{else}}
+              <span>{{letter}}</span>
+            {{/if}}
           </div>
 
-          <span class="{{styles.userName}}">{{data.display_name}}</span>
+          <span class="{{styles.userName}}">{{currentName}}</span>
         </div>
 
         <div class="{{styles.right}}">
