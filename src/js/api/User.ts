@@ -50,6 +50,15 @@ export class UserAPI extends BaseAPI {
     })
   }
 
+  getUsers(data: {login: string}) {
+    return this.http.post('/search', {
+      data,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+  }
+
   create = undefined;
   update = undefined;
   delete = undefined;

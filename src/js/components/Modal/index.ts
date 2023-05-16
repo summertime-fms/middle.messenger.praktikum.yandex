@@ -5,9 +5,10 @@ import {getChangedProps} from "../../helpers/utils";
 import Button from "../Button";
 import closeIcon from './../../../img/sprite/close.svg';
 export interface ModalProps {
-  innerComponent: typeof Block;
-  isOpened: boolean
-  title?: string
+  innerComponent: Block;
+  isOpened: boolean;
+  title?: string;
+  events?: Record<string, () => void>
 }
 
 export default class Modal extends Block {
@@ -16,7 +17,8 @@ export default class Modal extends Block {
   }
 
   init() {
-    this.children.content = new this.props.innerComponent();
+    console.log(this.children)
+
     this.children.closeButton = new Button({
       text: 'Close',
       type: 'button',

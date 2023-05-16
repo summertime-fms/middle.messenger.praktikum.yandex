@@ -75,6 +75,20 @@ export const isEqual = (x: any, y: any): boolean => {
 
 type propsObject = Record<string, unknown>;
 
-export const getChangedProps = (a: propsObject, b: propsObject) => {
+export const getChangedProps = (a: propsObject, b: propsObject): string[] => {
   return Object.keys(a).filter((key: string) =>  a[key] === b[key]);
+}
+
+export const debounce = (callee: Function, timeoutMs: number) => {
+  return function perform(...args: any) {
+    let previousCall = this.lastCall
+
+    this.lastCall = Date.now()
+
+    if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+      clearTimeout(this.lastCallTimer)
+    }
+
+    this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
+  }
 }

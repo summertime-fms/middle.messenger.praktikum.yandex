@@ -2,7 +2,7 @@ import { User } from '../api/Auth';
 import Block from './Block';
 import EventBus from './EventBus';
 import { set } from './utils';
-
+import {UserData} from "../api/User";
 export enum StoreEvents {
   Updated = 'Updated',
 }
@@ -13,7 +13,11 @@ type State = {
     isLoading: boolean;
     hasError: boolean;
     avatar?: Record<string, string>,
-    passwordError?: string
+    passwordError?: string,
+    search?: {
+      results: UserData[],
+      error?: string
+    }
   },
   auth?: {
     signUpError?: string,

@@ -22,13 +22,18 @@ type AttributesObject = Record<string, string>
 export default class Input extends Block {
   classesStr: string;
   constructor(props: InputProps) {
+    const externalInput = props.events?.input;
     const externalChange = props.events?.change;
 
     const internalInput = () => {
-      if (['text', 'number', 'tel', 'email', 'password'].includes(this.props.type)) {
+      if (['text', 'number', 'tel', 'email', 'password', 'search'].includes(this.props.type)) {
         this.setProps({
           value: this.inputElement.value
         })
+      }
+
+      if (externalInput) {
+        externalInput();
       }
     }
     const internalChange = () => {

@@ -20,6 +20,7 @@ export default class SettingsBase extends Block {
   private userData: User | null;
   constructor(props: SettingsProps) {
     super(props);
+
     this.userData = null;
   }
 
@@ -37,12 +38,14 @@ export default class SettingsBase extends Block {
 
       inputs: this.inputs,
       events: {
-        submit: () => {
+        submit: async () => {
           const data = this.getUserData();
-          UserController.update(data);
+          await UserController.update(data);
+          this.props.events.onSave();
         }
       }
     });
+
     this.children.uploadAvatar = new UploadAvatar({});
   }
 

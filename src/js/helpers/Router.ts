@@ -44,7 +44,6 @@ class Route {
 
   render() {
     if (!this.block) {
-      console.log(this.blockClass)
       render(this.query, new this.blockClass());
       return;
     }

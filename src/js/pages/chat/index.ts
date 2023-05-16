@@ -5,10 +5,11 @@ import {withStore} from "../../helpers/Store";
 import AuthController from "../../controllers/AuthController";
 
 //chat-comps
-import ChatsList from './Blocks/ChatsList';
-import ChatWindow from './Blocks/ChatWindow';
-import {Settings} from './Blocks/Settings';
-import {PasswordSettings} from './Blocks/PasswordSettings';
+import ChatsList from './chatComponents/ChatsList';
+import ChatWindow from './chatComponents/ChatWindow';
+import {Settings} from './chatComponents/Settings';
+import {PasswordSettings} from './chatComponents/PasswordSettings';
+
 //common-comps
 import Button from '../../components/Button';
 import Message from '../../components/Message';
@@ -50,14 +51,31 @@ class ChatPageBase extends Block {
 
     this.children.settingsModal = new Modal({
       title: 'Settings',
-      innerComponent: Settings,
-      isOpened: false
+      innerComponent: new Settings({
+        text: 'Test',
+        events: {
+          onSave: () => {
+            this.children.settingsModal.setProps({
+              isOpened: false
+            })
+          }
+        }
+      }),
+      isOpened: false,
     });
+
 
     this.children.passwordModal = new Modal({
       title: 'Password',
-      innerComponent: PasswordSettings,
-      isOpened: false
+      innerComponent: new PasswordSettings({}),
+      isOpened: false,
+      events: {
+        onSave: () => {
+          this.children.passwordModal.setProps({
+            isOpened: false
+          })
+        }
+      }
     });
 
     this.children.settingsButton = new Button({
