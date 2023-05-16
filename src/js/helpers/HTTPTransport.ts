@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 export enum FETCH_METHODS {
   POST = 'POST',
   GET = 'GET',
@@ -8,8 +6,7 @@ export enum FETCH_METHODS {
   DELETE = 'DELETE'
 }
 
-/* eslint-enable */
-type HTTPMethod = (url: string, options?: Options) => Promise<unknown>
+type HTTPMethod = (path: string, options?: Record<string, any>, timeout?: number) => Promise<unknown>
 
 const queryStringify = (data: object): string => {
   if (typeof data !== 'object') {
@@ -26,37 +23,54 @@ type Options = {
   headers?: Record<string, string>
 }
 
-class HTTPTransport {
-  get: HTTPMethod = (url, options = {}) => {
-    const {data} = options;
+export default class HTTPTransport {
+  private readonly url: string;
+  static BASE_API_URL = 'https://ya-praktikum.tech/api/v2';
+
+  constructor(endpoint: string) {
+    this.url = HTTPTransport.BASE_API_URL + endpoint;
+  };
+
+  get: HTTPMethod = (path, options = {}) => {
+    const data = options.data;
+    let url = this.url + path;
 
     if (data) {
       url = url + queryStringify(data);
     }
 
-    return this.request(url, {...options, method: FETCH_METHODS.GET}, options.timeout);
+    return this.request(url, {...options, method: FETCH_METHODS.GET});
+  }
+
+  post: HTTPMethod = (path: string, options: Options) => {
+    let url = this.url + path;
+    return this.request(url, {
+      ...options,
+      method: FETCH_METHODS.POST
+      });
   };
 
-  post = (url: string, options: Options) => {
-    return this.request(url, {...options, method: FETCH_METHODS.POST}, options.timeout);
+  put: HTTPMethod = (path: string, options: Options) => {
+    let url = this.url + path;
+
+    return this.request(url,
+      {...options, method: FETCH_METHODS.PUT});
   };
 
-  put = (url: string, options: Options) => {
-    return this.request(url, {...options, method: FETCH_METHODS.PUT}, options.timeout);
+  delete: HTTPMethod = (path: string, options: Options) => {
+    let url = this.url + path;
+
+    return this.request(url, {...options, method: FETCH_METHODS.DELETE});
   };
 
-  delete = (url: string, options: Options) => {
-    return this.request(url, {...options, method: FETCH_METHODS.DELETE}, options.timeout);
-  };
-
-  request = (url: string, options: Options, timeout = 5000) => {
+  request = (url: string, options: Options) => {
     let {method, data, headers = {}} = options;
-
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      const isGet = method === FETCH_METHODS.GET;
+      const isFormData = data instanceof FormData;
 
-      xhr.open(
-        method!, url);
+      xhr.open(method!, url);
 
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
@@ -66,6 +80,9 @@ class HTTPTransport {
         resolve(xhr);
       }
 
+      xhr.withCredentials = true;
+      xhr.responseType = 'json';
+
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
@@ -73,7 +90,12 @@ class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        if(isFormData) {
+          xhr.send(data)
+        } else {
+          console.log(data)
+          xhr.send(JSON.stringify(data))
+        }
       }
     })
   };

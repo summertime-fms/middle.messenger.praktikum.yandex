@@ -1,0 +1,22 @@
+.link {
+  transition: color $trans;
+  cursor: pointer;
+
+  &:has(.icon) {
+    &:hover {
+      color: $accentColor;
+    }
+  }
+
+  &:has(.textLink) {
+    color: $accentColor;
+    font-size: 11px;
+    line-height: 13px;
+    text-decoration-line: underline;
+    margin-top: 10px;
+
+    &:hover {
+      color: $gray;
+    }
+  }
+}

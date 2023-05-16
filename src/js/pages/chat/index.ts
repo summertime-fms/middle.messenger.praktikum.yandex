@@ -1,62 +1,38 @@
 import Block from '../../helpers/Block';
-import ChatsList from './Blocks/ChatsList';
 import template from './template.hbs';
-import ChatWindow from './Blocks/ChatWindow';
+import styles from './styles.module.pcss';
+import {withStore} from "../../helpers/Store";
+import AuthController from "../../controllers/AuthController";
+
+//chat-comps
+import ChatsList from './chatComponents/ChatsList';
+import ChatWindow from './chatComponents/ChatWindow';
+import {Settings} from './chatComponents/Settings';
+import {PasswordSettings} from './chatComponents/PasswordSettings';
+
+//common-comps
 import Button from '../../components/Button';
 import Message from '../../components/Message';
-import { messagesArr, submitSettingsButton as submitButton, settingsFormLabels as labels } from '../../helpers/mocks';
-import Settings from './Blocks/Settings';
-import Form from '../../components/Form';
-import { renderDom } from '../../helpers/renderDOM';
+import Modal from './../../components/Modal';
+import Dialog, {DialogProps} from "../../components/Dialog";
+import {Link} from "../../components/Link";
+
+// icons
+import logoutIcon from './../../../img/sprite/logout.svg';
+import settingsIcon from './../../../img/sprite/settings.svg';
+import passwordIcon from './../../../img/sprite/password.svg';
+
+import { messagesArr, dialogsData } from '../../helpers/mocks';
 
 const messages: Message[] = messagesArr.map((message) => new Message(message));
+const dialogs: Dialog[] = dialogsData.map((dialog: DialogProps) => new Dialog(dialog));
 
 interface ChatPageProps {
-  isSettingsOpened?: boolean
+  isSettingsOpened?: boolean;
+  visibleName: string;
+  letter: string
 }
-
-const chats = [
-  {
-    id: 1,
-    name: 'Имя',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: true,
-  },
-  {
-    id: 2,
-    name: 'Имя 2',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: false,
-  },
-  {
-    id: 3,
-    name: 'Имя 3',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: true,
-  },
-  {
-    id: 4,
-    name: 'Имя 4',
-    messagePreview: 'Сообщение сообщение сообщение',
-    time: '15:29',
-    totalNewMessages: 10,
-    isRead: true,
-  },
-];
-
-const settingsForm = new Form({
-  labels,
-  submitButton,
-  events: {},
-});
-
-export default class ChatPage extends Block {
+class ChatPageBase extends Block {
   protected isSettingsOpened: boolean;
 
   constructor(props: ChatPageProps) {
@@ -66,43 +42,109 @@ export default class ChatPage extends Block {
 
   init() {
     this.children.chatsList = new ChatsList({
-      chats,
+      dialogs
     });
 
     this.children.chatWindow = new ChatWindow({
       messages,
     });
 
-    this.children.settingsModal = new Settings({
+    this.children.settingsModal = new Modal({
       title: 'Settings',
+      innerComponent: new Settings({
+        text: 'Test',
+        events: {
+          onSave: () => {
+            this.children.settingsModal.setProps({
+              isOpened: false
+            })
+          }
+        }
+      }),
       isOpened: false,
-      form: settingsForm,
+    });
+
+
+    this.children.passwordModal = new Modal({
+      title: 'Password',
+      innerComponent: new PasswordSettings({}),
+      isOpened: false,
+      events: {
+        onSave: () => {
+          this.children.passwordModal.setProps({
+            isOpened: false
+          })
+        }
+      }
     });
 
     this.children.settingsButton = new Button({
       text: 'Settings',
-      classes: 'chats__settings',
       type: 'button',
+      icon: {
+        width: 25,
+        height: 25,
+        hash: settingsIcon
+      },
       events: {
         click: () => {
-          this.children.settingsModal._show();
+          this.children.settingsModal.setProps({
+            isOpened: true
+          });
         },
       },
     });
+
+    this.children.passwordButton = new Button({
+      text: 'Password',
+      icon: {
+        width: 26,
+        height: 26,
+        hash: passwordIcon
+      },
+      type: 'button',
+      events: {
+        click: () => {
+          this.children.passwordModal.setProps({
+            isOpened: true
+          });
+        },
+      },
+    })
+
+    this.children.logoutLink = new Link({
+      text: 'Logout',
+      icon: {
+        width: 25,
+        height: 25,
+        hash: logoutIcon
+      },
+      events: {
+        click() {
+          AuthController.logout()
+        }
+      }
+    });
+
+    this.setProps({
+      letter: (this.props.data.display_name || this.props.data.first_name).split('')[0].toUpperCase(),
+      currentName: this.props.data.display_name || this.props.data.first_name
+    })
+
+
+    this.dispatchComponentDidMount();
   }
 
-  componentDidMount() {
-    const links: HTMLLinkElement[] = this.element.querySelectorAll('.nav a');
-    Array.from(links).forEach((link) => {
-      link.addEventListener('click', (evt: any) => {
-        evt.preventDefault();
-        const { page } = link.dataset;
-        renderDom(page!);
-      });
-    });
+  componentDidUpdate(): boolean {
+    return false;
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {...this.props, styles, icons: {logoutIcon}});
   }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+const ChatPage = withUser(ChatPageBase);
+export { ChatPage };

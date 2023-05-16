@@ -21,6 +21,8 @@ export default class EventBus {
   }
 
   emit(event: string, ...args: any[]) {
+    if (!this.listeners[event]) return;
+
     this.checkEvent(event);
 
     this.listeners[event].forEach((listener) => {

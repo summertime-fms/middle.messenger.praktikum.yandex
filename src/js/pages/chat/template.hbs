@@ -1,34 +1,35 @@
 <div class="chat-outer wrapper">
-  <ul class="nav wrapper" style="justify-content: center;margin-bottom: 25px;display: flex; gap: 25px">
-    <li>
-      <a href="#" data-page="signUp">Sign Up</a>
-    </li>
-    <li>
-      <a href="#" data-page="signIn">Sign In</a>
-    </li>
-    <li>
-      <a href="#" data-page="chat">Chat</a>
-    </li>
-    <li>
-      <a href="#" data-page="error">Error</a>
-    </li>
-  </ul>
+  <div class="{{styles.chat}}">
+    <div class="{{styles.chat__left}}">
+      <header class="{{styles.chats__header}}">
+        <div class="{{styles.left}}">
 
-  <div class="chat wrapper">
-    <div class="chat__left chats">
-      <header class="chats__header">
-        <span>
-            Chats
-        </span>
+          <div class="{{styles.avatar}}">
+            {{#if avatar.pathname}}
+              <img src="{{avatar.pathname}}" alt="avatar">
+            {{else}}
+              <span>{{letter}}</span>
+            {{/if}}
+          </div>
 
-        {{{settingsButton}}}
+          <span class="{{styles.userName}}">{{currentName}}</span>
+        </div>
+
+        <div class="{{styles.right}}">
+
+          {{{passwordButton}}}
+          {{{settingsButton}}}
+          {{{logoutLink}}}
+        </div>
       </header>
+
 
       {{{chatsList}}}
     </div>
 
     {{{chatWindow}}}
     {{{settingsModal}}}
+    {{{passwordModal}}}
   </div>
 
 </div>

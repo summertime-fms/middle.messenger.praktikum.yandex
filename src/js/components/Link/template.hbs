@@ -1,0 +1,11 @@
+<a class="{{styles.link}}" title="{{text}}">
+{{#if icon}}
+  <svg class="{{styles.icon}}" width="{{icon.width}}" height="{{icon.height}}" viewBox="0 0 ${{icon.width}} {{icon.height}}" aria-label="{{text}}">
+    <use href="{{icon.hash}}"></use>
+  </svg>
+{{else}}
+  <span class="{{styles.textLink}}">
+  {{text}}
+  </span>
+{{/if}}
+</a>

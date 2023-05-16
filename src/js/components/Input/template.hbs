@@ -1,1 +1,14 @@
-<input type="{{type}}" name="{{name}}" required="{{isRequired}}">
+<label class="{{ styles.label }} {{classes}}" >
+  <div>
+    <input class="{{ styles.input }}" type="{{type}}" value="{{value}}" name="{{name}}" placeholder=" " {{required}} {{extraAttrs}}>
+
+    {{#if text}}
+        <span class="{{styles.labelText}}">
+          {{text}}
+        </span>
+    {{/if}}
+
+  </div>
+
+  {{{error}}}
+</label>

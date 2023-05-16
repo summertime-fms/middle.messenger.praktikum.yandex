@@ -1,0 +1,12 @@
+<div class="{{styles.avatarUpload}}">
+
+  <div class="{{styles.preview}}">
+    {{#if pathname}}
+      <img class="{{styles.previewImg}}" src="{{pathname}}" alt="Avatar">
+    {{/if}}
+  </div>
+
+  <form enctype="multipart/form-data">
+      {{{uploadInput}}}
+  </form>
+</div>

@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "lib": [
-      "es2017",
+      "es2019",
       "dom"
     ],
     "noImplicitAny": true,

@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid';
 import EventBus from './EventBus';
 
-export default abstract class Block<Props extends Record<string, any> = unknown> {
+type Props = Record<string, any>;
+export default abstract class Block {
   static readonly EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -15,9 +16,9 @@ export default abstract class Block<Props extends Record<string, any> = unknown>
 
   private _element: any = null;
 
-  protected props: Props;
+  props;
 
-  private events: Record<string, () => void>;
+  private readonly events: Record<string, () => void>;
 
   public children: Record<string, any>;
 
@@ -42,7 +43,6 @@ export default abstract class Block<Props extends Record<string, any> = unknown>
   }
 
   init() {
-
   }
 
   _init() {
@@ -122,6 +122,7 @@ export default abstract class Block<Props extends Record<string, any> = unknown>
     const fragment: any = this.render(); // временно any
     const el = fragment.firstElementChild;
 
+
     if (this._element) {
       this._element.replaceWith(el);
     }
@@ -182,7 +183,7 @@ export default abstract class Block<Props extends Record<string, any> = unknown>
       get(target, prop: string) {
         const value = target[prop as keyof Object];
 
-        if (value && value.toString().startsWith('_')) {
+        if (value && value.toString().startsWith('_') && prop !== 'classes') { //костыль связанный с тем как postcss генерит префиксы для классов
           throw new Error('Нет прав');
         }
 

@@ -1,5 +1,4 @@
 import Input from '../components/Input';
-import Label from '../components/Label';
 
 interface ValidationHelper {
   regExp: RegExp,
@@ -37,21 +36,47 @@ const REGEXPS: Record<string, ValidationHelper> = {
     regExp: /^./,
     errorMessage: 'Нельзя отправить пустое сообщение',
   },
+  DISPLAY_NAME: {
+    regExp: /^./,
+    errorMessage: 'Поле обязательно к заполнению',
+  },
+  OLDPASSWORD: {
+    /* eslint-disable */
+    regExp: /[A-ZА-Я][a-zа-я\-]*/,
+    /* eslint-enable */
+    errorMessage: 'Длина пароля должна быть от 8 до 40 символов. Пароль должен содержать хотя бы одну заглавную букву и одну цифру.',
+  },
+  NEWPASSWORD: {
+    /* eslint-disable */
+    regExp: /[A-ZА-Я][a-zа-я\-]*/,
+    /* eslint-enable */
+    errorMessage: 'Длина пароля должна быть от 8 до 40 символов. Пароль должен содержать хотя бы одну заглавную букву и одну цифру.',
+  },
+  REPEAT_PASSWORD: {
+    /* eslint-disable */
+    regExp: /[A-ZА-Я][a-zа-я\-]*/,
+    /* eslint-enable */
+    errorMessage: 'Длина пароля должна быть от 8 до 40 символов. Пароль должен содержать хотя бы одну заглавную букву и одну цифру.',
+
+  }
 };
 
 const validateInput = (input: Input): string | boolean => {
-  const inputName = input.element.name;
-  const { value } = input.element;
+  const {name, value} = input.props;
 
-  const key = inputName.toUpperCase();
+  const key = name.toUpperCase();
 
   if (!REGEXPS[key]) {
-    throw new Error(`No associated rule with ${inputName} input`);
+    throw new Error(`No associated rule with ${name} input`);
   }
 
   const { regExp, errorMessage } = REGEXPS[key];
 
-  if (regExp.test(value) || !value.length) {
+  if (!value) {
+    return 'Поле обязательно к заполнению';
+  }
+
+  if (regExp.test(value)) {
     return true;
   }
 
@@ -60,24 +85,32 @@ const validateInput = (input: Input): string | boolean => {
 
 type Errors = Record<string, string>
 
-export const validateForm = (inputs: Input[]): Errors => {
+const renderErrors = (inputs: Input[], errors: Errors) => {
+  Object.entries(errors).forEach(([key, value]) => {
+    const input: Input = inputs.filter((input: Input) => key === input.props.name)[0];
+    const errorElem = input.children.error;
+    errorElem.setProps({
+      errorContent: value,
+    });
+  })
+}
+
+export const validateForm = (inputs: Input[]): boolean => {
   const errors: Errors = {};
+
   inputs.forEach((input) => {
-    const { name } = input.element;
+    const { name } = input.props;
     const result: string | boolean = validateInput(input);
     if (typeof result === 'string') {
       errors[name] = result;
     }
   });
 
-  return errors;
-};
+  let isValid: boolean = Object.values(errors).length === 0;
 
-export const validate = (input: Input, label: Label): void => {
-  const errorElem = label.children.error;
-  const validateResult = validateInput(input);
-  const errorContent = typeof validateResult === 'boolean' ? '' : validateResult;
-  errorElem.setProps({
-    errorContent,
-  });
+  if (!isValid) {
+    renderErrors(inputs, errors)
+  }
+
+  return isValid;
 };

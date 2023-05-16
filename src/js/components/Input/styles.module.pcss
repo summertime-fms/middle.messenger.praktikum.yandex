@@ -1,0 +1,53 @@
+.input {
+  height: 30px;
+  padding: 0 8px;
+  line-height: 30px;
+  display: block;
+  width: 100%;
+  font-family: $secondFont;
+  font-weight: 500;
+  font-size: 14px;
+  color: $black;
+  border-bottom: 2px solid $accentColor;
+
+  &:focus + span {
+    transform: scale(0.75) translate(-8px, -35px);
+  }
+
+  &:not(:placeholder-shown):not(:focus) + span {
+    transform: scale(0.75) translate(-8px, -35px);
+  }
+
+  &::placeholder {
+    color: transparent;
+  }
+}
+
+.label {
+  width: 100%;
+  display: grid;
+
+
+  & > div {
+    position: relative;
+  }
+
+  & > [data-active] {
+    & span {
+      transform: scale(0.75) translate(-8px, -35px);
+    }
+  }
+}
+
+.labelText {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 8px;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: $gray;
+  transition: transform $trans;
+  pointer-events: none;
+}
